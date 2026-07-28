@@ -9,9 +9,7 @@ import { siteConfig } from "@/lib/site";
 
 const links = [
   ["/", "Home"],
-  ["/how-it-works", "How it works"],
   ["/for-merchants", "For merchants"],
-  ["/about", "About"],
   ["/contact", "Contact"],
 ] as const;
 

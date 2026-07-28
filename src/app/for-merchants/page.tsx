@@ -1,17 +1,11 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowRight, BarChart3, Building2, CheckCircle2, GitBranch, LineChart, Megaphone, ShieldCheck, Users } from "lucide-react";
-import { Eyebrow, FinalCta, PageHero } from "@/components/sections";
-import { siteConfig } from "@/lib/site";
+import { ReferencePage } from "@/components/reference-page";
 
-export const metadata: Metadata = { title: "For merchants", description: "Manage stores, publish local offers, and understand customer engagement with the OffSay merchant workspace." };
+export const metadata: Metadata = {
+  title: "For Merchants",
+  description: "List your business, publish offers, and reach nearby customers with OffSay.",
+};
 
-export default function ForMerchantsPage() {
-  return <>
-    <PageHero eyebrow="OffSay for merchants" title="Reach nearby customers without adding more noise." description="Bring your stores, offers, team, and performance insights into one focused workspace built for local businesses." />
-    <section className="section shell split-feature"><div><Eyebrow>One clear workspace</Eyebrow><h2>Everything your local presence needs.</h2><p>OffSay gives owners and managers the tools to keep information accurate, launch branch-aware campaigns, and understand results.</p><div className="button-row"><a className="button" href={siteConfig.portalUrl} target="_blank" rel="noreferrer">List your business <ArrowRight /></a><Link className="button button-secondary" href="/how-it-works">See how OffSay works</Link></div></div><div className="dashboard-demo"><div className="dashboard-title"><span className="icon-box"><Building2 /></span><div><small>Merchant workspace</small><strong>Your business at a glance</strong></div></div><div className="metric-row"><span><strong>3</strong><small>Active stores</small></span><span><strong>12</strong><small>Live offers</small></span><span><strong>4.7</strong><small>Avg. rating</small></span></div><div className="chart-demo"><i style={{height:"32%"}}/><i style={{height:"52%"}}/><i style={{height:"43%"}}/><i style={{height:"74%"}}/><i style={{height:"60%"}}/><i style={{height:"88%"}}/><i style={{height:"69%"}}/></div></div></section>
-    <section className="section soft-section"><div className="shell"><div className="section-heading centered"><Eyebrow>Built to scale with you</Eyebrow><h2>From one store to multiple branches.</h2></div><div className="feature-grid"><article><GitBranch /><h3>Branch-level control</h3><p>Keep category, contact information, facilities, social links, and subscription status accurate for every location.</p></article><article><Megaphone /><h3>Flexible campaigns</h3><p>Publish an offer for one store, selected stores, or all compatible active branches.</p></article><article><Users /><h3>Team permissions</h3><p>Invite managers, assign branches, and control who can edit, publish, or view analytics.</p></article><article><LineChart /><h3>Useful analytics</h3><p>Understand views, likes, saves, shares, direction taps, reviews, and performance by store or offer.</p></article><article><ShieldCheck /><h3>Verified presence</h3><p>Approved businesses and stores help customers make local decisions with more confidence.</p></article><article><BarChart3 /><h3>Clear status</h3><p>See profile completion, offer validity, branch availability, and subscription information at a glance.</p></article></div></div></section>
-    <section className="section shell"><div className="section-heading centered"><Eyebrow>Getting started</Eyebrow><h2>A straightforward path to your first offer.</h2></div><div className="timeline"><article><span>1</span><div><h3>List your business</h3><p>Share the essential owner, business, and primary store information.</p></div></article><article><span>2</span><div><h3>Complete review</h3><p>Verify your email and follow the application status until approval.</p></div></article><article><span>3</span><div><h3>Activate your store</h3><p>Once the store is approved and its subscription is active, your workspace is ready.</p></div></article><article><span>4</span><div><h3>Publish and learn</h3><p>Create an offer, select eligible branches, and track customer engagement.</p></div></article></div><div className="center-action"><a className="button" href={siteConfig.portalUrl} target="_blank" rel="noreferrer"><CheckCircle2 /> Open the business portal</a></div></section>
-    <FinalCta />
-  </>;
+export default function MerchantsPage() {
+  return <ReferencePage file="merchants.html" />;
 }

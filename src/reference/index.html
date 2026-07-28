@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Offsay — Every Nearby Offer, In One App</title>
+<meta name="description" content="Offsay helps you discover the best nearby offers across restaurants, bars, fashion, footwear, salons, electronics and more — filtered by distance, category and what's trending.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+
+<header class="site">
+  <div class="wrap nav-row">
+    <a href="index.html" class="logo">
+      <span class="logo-mark"><svg viewBox="0 0 24 24" fill="none"><path d="M3 11.5L11.5 3H19a2 2 0 0 1 2 2v7.5L12.5 21 3 11.5Z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/><circle cx="15.5" cy="8.5" r="1.6" fill="#fff"/></svg></span>
+      Offsay
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html" class="active">Home</a>
+      <a href="merchants.html">For Merchants</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="#download" class="btn btn-primary btn-sm">Download App</a>
+      <div class="nav-toggle" id="navToggle"><i class="fa-solid fa-bars"></i></div>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section style="padding-top:90px;">
+  <div class="wrap grid grid-2" style="align-items:center; gap:60px;">
+    <div class="reveal in">
+      <span class="eyebrow"><i class="fa-solid fa-location-dot"></i> Local offers, made simple</span>
+      <h1 class="h-display" style="font-size:clamp(36px,5vw,58px); line-height:1.12; margin-top:22px;">
+        Every nearby offer,<br>in <span class="grad-text">one app.</span>
+      </h1>
+      <p class="muted" style="font-size:17px; margin-top:22px; max-width:480px; line-height:1.75;">
+        Offsay brings together restaurants, bars, fashion, footwear, salons, electronics and more — filtered by distance, category, and what's trending near you right now.
+      </p>
+      <div style="display:flex; gap:14px; margin-top:34px; flex-wrap:wrap;" id="download">
+        <a href="#" class="store-badge"><i class="fa-brands fa-apple"></i><span class="lines"><span>Download on the</span><span>App Store</span></span></a>
+        <a href="#" class="store-badge"><i class="fa-brands fa-google-play" style="font-size:19px;"></i><span class="lines"><span>Get it on</span><span>Google Play</span></span></a>
+      </div>
+      <div style="display:flex; align-items:center; gap:10px; margin-top:26px;">
+        <span class="muted" style="font-size:13px;">Own a business instead?</span>
+        <a href="merchants.html" style="font-size:13px; font-weight:700; color:var(--violet-light);">List it on Offsay →</a>
+      </div>
+    </div>
+
+    <div class="reveal in" style="display:flex; justify-content:center;">
+      <div class="phone-mock">
+        <div class="notch"></div>
+        <div class="screen" style="padding:34px 16px 20px;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <div class="mono" style="font-size:8.5px; letter-spacing:1px; color:var(--violet-light); text-transform:uppercase;"><i class="fa-solid fa-location-dot"></i> Location</div>
+              <div class="h-display" style="font-size:13px; font-weight:600; margin-top:3px;">Tiruppur</div>
+            </div>
+            <div style="width:26px; height:26px; border-radius:9px; background:rgba(255,255,255,.06); display:flex; align-items:center; justify-content:center;"><i class="fa-regular fa-bell" style="font-size:10px; color:var(--text-muted);"></i></div>
+          </div>
+          <div style="margin-top:14px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); border-radius:11px; padding:9px 12px; display:flex; align-items:center; gap:8px;">
+            <i class="fa-solid fa-magnifying-glass" style="font-size:10px; color:var(--violet-light);"></i>
+            <span style="font-size:10px; color:var(--text-faint);">Search offers near you…</span>
+          </div>
+          <div style="display:flex; gap:6px; margin-top:12px;">
+            <span style="font-size:9px; padding:6px 10px; border-radius:20px; background:var(--grad); color:#fff; font-weight:700; white-space:nowrap;">🍽 Food</span>
+            <span style="font-size:9px; padding:6px 10px; border-radius:20px; background:rgba(255,255,255,.06); color:var(--text-muted); white-space:nowrap;">🍸 Bars</span>
+            <span style="font-size:9px; padding:6px 10px; border-radius:20px; background:rgba(255,255,255,.06); color:var(--text-muted); white-space:nowrap;">👕 Fashion</span>
+          </div>
+          <div style="margin-top:16px; font-size:9.5px; font-weight:700; color:var(--text-muted);">NEARBY OFFERS</div>
+          <div style="margin-top:9px; background:var(--surface); border:1px solid var(--border); border-radius:13px; overflow:hidden; display:flex;">
+            <div style="width:44px; background:var(--grad); display:flex; flex-direction:column; align-items:center; justify-content:center; color:#fff;">
+              <span style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:12px;">20%</span>
+              <span style="font-size:6px; letter-spacing:.5px;">OFF</span>
+            </div>
+            <div style="padding:9px 10px; flex:1;">
+              <div style="font-size:9px; color:var(--text-faint);">Anna Idli Corner</div>
+              <div style="font-size:10.5px; font-weight:700; margin-top:2px;">Flat 20% off Thali Meals</div>
+              <div style="font-size:8.5px; color:var(--violet-light); margin-top:5px;"><i class="fa-solid fa-location-dot"></i> 0.8 km away</div>
+            </div>
+          </div>
+          <div style="margin-top:8px; background:var(--surface); border:1px solid var(--border); border-radius:13px; overflow:hidden; display:flex;">
+            <div style="width:44px; background:linear-gradient(135deg,#FF7A8A,#D6335A); display:flex; flex-direction:column; align-items:center; justify-content:center; color:#fff;">
+              <span style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:11px;">BOGO</span>
+            </div>
+            <div style="padding:9px 10px; flex:1;">
+              <div style="font-size:9px; color:var(--text-faint);">The Brew House</div>
+              <div style="font-size:10.5px; font-weight:700; margin-top:2px;">Buy 1 Get 1 on Cocktails</div>
+              <div style="font-size:8.5px; color:var(--violet-light); margin-top:5px;"><i class="fa-solid fa-fire"></i> Trending</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="tight">
+  <div class="wrap reveal">
+    <div class="stat-strip">
+      <div class="stat"><div class="stat-num grad-text">10+</div><div class="muted" style="font-size:12.5px; margin-top:6px;">Categories covered</div></div>
+      <div class="stat"><div class="stat-num grad-text">6</div><div class="muted" style="font-size:12.5px; margin-top:6px;">Cities at launch</div></div>
+      <div class="stat"><div class="stat-num grad-text">100%</div><div class="muted" style="font-size:12.5px; margin-top:6px;">Free for shoppers</div></div>
+      <div class="stat"><div class="stat-num grad-text">24/7</div><div class="muted" style="font-size:12.5px; margin-top:6px;">Fresh offers, always on</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT IS OFFSAY -->
+<section id="what">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">What is Offsay</span>
+      <h2 class="h-display">One app for every offer worth knowing about.</h2>
+      <p>No more following ten different store pages or missing a sale because it wasn't advertised near you. Offsay pulls every nearby, active offer into a single, filterable feed.</p>
+    </div>
+    <div class="grid grid-3 reveal">
+      <div class="card">
+        <div class="icon-tile grad"><i class="fa-solid fa-map-location-dot"></i></div>
+        <h3 class="h-display" style="font-size:18px;">Discover nearby</h3>
+        <p class="muted" style="font-size:14.5px; margin-top:10px; line-height:1.7;">Set your distance radius — 10, 20, 30 km — and see only offers you can actually reach today.</p>
+      </div>
+      <div class="card">
+        <div class="icon-tile grad"><i class="fa-solid fa-layer-group"></i></div>
+        <h3 class="h-display" style="font-size:18px;">Every category</h3>
+        <p class="muted" style="font-size:14.5px; margin-top:10px; line-height:1.7;">Food, bars, fashion, footwear, salons, electronics and more — filter to exactly what you're shopping for.</p>
+      </div>
+      <div class="card">
+        <div class="icon-tile grad"><i class="fa-solid fa-heart"></i></div>
+        <h3 class="h-display" style="font-size:18px;">Save & track</h3>
+        <p class="muted" style="font-size:14.5px; margin-top:10px; line-height:1.7;">Bookmark offers for later, rate the ones you've used, and get a heads-up before a deal expires.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section style="background:var(--surface); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">How it works</span>
+      <h2 class="h-display">Finding a deal takes three taps.</h2>
+    </div>
+    <div class="grid grid-3 reveal" style="gap:0;">
+      <div style="padding-right:30px;">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div>
+            <h3 class="h-display" style="font-size:17px;">Set your location</h3>
+            <p class="muted" style="font-size:14px; margin-top:8px; line-height:1.7;">Turn on location, choose a radius, and Offsay finds every active offer within reach.</p>
+          </div>
+        </div>
+      </div>
+      <div style="padding-right:30px;">
+        <div class="step">
+          <div class="step-num">2</div>
+          <div>
+            <h3 class="h-display" style="font-size:17px;">Filter by category</h3>
+            <p class="muted" style="font-size:14px; margin-top:8px; line-height:1.7;">Browse trending or most-liked offers, or jump straight to a category like footwear or salons.</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div>
+            <h3 class="h-display" style="font-size:17px;">Redeem in-store</h3>
+            <p class="muted" style="font-size:14px; margin-top:8px; line-height:1.7;">Get directions with one tap, show your offer at checkout, and rate it once you're done.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section>
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Categories</span>
+      <h2 class="h-display">Built for how people actually shop nearby.</h2>
+    </div>
+    <div class="grid grid-5 reveal">
+      <div class="card" style="padding:22px 18px; text-align:center;"><div class="icon-tile" style="margin:0 auto 14px;"><i class="fa-solid fa-utensils"></i></div><div style="font-size:13.5px; font-weight:700;">Food & Dining</div></div>
+      <div class="card" style="padding:22px 18px; text-align:center;"><div class="icon-tile" style="margin:0 auto 14px;"><i class="fa-solid fa-martini-glass"></i></div><div style="font-size:13.5px; font-weight:700;">Bars & Nightlife</div></div>
+      <div class="card" style="padding:22px 18px; text-align:center;"><div class="icon-tile" style="margin:0 auto 14px;"><i class="fa-solid fa-shirt"></i></div><div style="font-size:13.5px; font-weight:700;">Clothing</div></div>
+      <div class="card" style="padding:22px 18px; text-align:center;"><div class="icon-tile" style="margin:0 auto 14px;"><i class="fa-solid fa-shoe-prints"></i></div><div style="font-size:13.5px; font-weight:700;">Footwear</div></div>
+      <div class="card" style="padding:22px 18px; text-align:center;"><div class="icon-tile" style="margin:0 auto 14px;"><i class="fa-solid fa-scissors"></i></div><div style="font-size:13.5px; font-weight:700;">Salon & Beauty</div></div>
+      <div class="card" style="padding:22px 18px; text-align:center;"><div class="icon-tile" style="margin:0 auto 14px;"><i class="fa-solid fa-mobile-screen-button"></i></div><div style="font-size:13.5px; font-weight:700;">Electronics</div></div>
+      <div class="card" style="padding:22px 18px; text-align:center;"><div class="icon-tile" style="margin:0 auto 14px;"><i class="fa-solid fa-cart-shopping"></i></div><div style="font-size:13.5px; font-weight:700;">Grocery</div></div>
+      <div class="card" style="padding:22px 18px; text-align:center;"><div class="icon-tile" style="margin:0 auto 14px;"><i class="fa-solid fa-briefcase-medical"></i></div><div style="font-size:13.5px; font-weight:700;">Health & Wellness</div></div>
+      <div class="card" style="padding:22px 18px; text-align:center;"><div class="icon-tile" style="margin:0 auto 14px;"><i class="fa-solid fa-hotel"></i></div><div style="font-size:13.5px; font-weight:700;">Travel & Hotels</div></div>
+      <div class="card" style="padding:22px 18px; text-align:center;"><div class="icon-tile" style="margin:0 auto 14px;"><i class="fa-solid fa-film"></i></div><div style="font-size:13.5px; font-weight:700;">Entertainment</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MERCHANT TEASER -->
+<section>
+  <div class="wrap">
+    <div class="cta-band reveal">
+      <span class="eyebrow">For business owners</span>
+      <h2 class="h-display" style="font-size:clamp(26px,3.4vw,36px); margin-top:18px;">Get discovered by customers already nearby.</h2>
+      <p class="muted" style="max-width:520px; margin:16px auto 30px; font-size:15.5px; line-height:1.7;">List your offers on Offsay and reach shoppers searching your category and district right now — no ad spend required.</p>
+      <a href="merchants.html" class="btn btn-primary btn-lg">Register as a Merchant <i class="fa-solid fa-arrow-right" style="margin-left:4px;"></i></a>
+    </div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <a href="index.html" class="logo" style="margin-bottom:14px;">
+          <span class="logo-mark"><svg viewBox="0 0 24 24" fill="none"><path d="M3 11.5L11.5 3H19a2 2 0 0 1 2 2v7.5L12.5 21 3 11.5Z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/><circle cx="15.5" cy="8.5" r="1.6" fill="#fff"/></svg></span>
+          Offsay
+        </a>
+        <p class="muted" style="font-size:13.5px; max-width:260px; line-height:1.7; margin-top:6px;">Every nearby offer, in one app. Discover, save and redeem local deals across every category.</p>
+        <div class="social-row" style="margin-top:20px;">
+          <a href="#"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="index.html#what">What is Offsay</a>
+        <a href="index.html#download">Download</a>
+        <a href="merchants.html">For Merchants</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="contact.html">Contact Us</a>
+        <a href="merchants.html">Partner With Us</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Offsay. All rights reserved.</span>
+      <span>Made for local businesses everywhere.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
+

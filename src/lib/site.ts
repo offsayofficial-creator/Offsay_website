@@ -9,10 +9,9 @@ export const siteConfig = {
     process.env.NEXT_PUBLIC_SITE_URL,
     "https://offsay.example",
   ),
-  portalUrl: cleanUrl(
-    process.env.NEXT_PUBLIC_PORTAL_URL,
+  portalUrl:
+    process.env.NEXT_PUBLIC_PORTAL_URL?.trim() ||
     "https://offsayofficial-creator.github.io/offsay-config/",
-  ),
   playStoreUrl: process.env.NEXT_PUBLIC_PLAY_STORE_URL?.trim() || "",
   appStoreUrl: process.env.NEXT_PUBLIC_APP_STORE_URL?.trim() || "",
   contactEmail:

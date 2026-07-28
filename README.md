@@ -23,7 +23,7 @@ The production build is a fully static export in `out/`, suitable for Cloudflare
 ## Environment variables
 
 - `NEXT_PUBLIC_SITE_URL`: canonical public website URL
-- `NEXT_PUBLIC_PORTAL_URL`: OffSay business portal base URL
+- `NEXT_PUBLIC_PORTAL_URL`: OffSay business portal URL (defaults to the GitHub Pages redirect)
 - `NEXT_PUBLIC_PLAY_STORE_URL`: official Android listing (leave blank for “Coming soon”)
 - `NEXT_PUBLIC_APP_STORE_URL`: official iOS listing (leave blank for “Coming soon”)
 - `NEXT_PUBLIC_CONTACT_EMAIL`: public support email
