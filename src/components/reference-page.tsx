@@ -6,6 +6,8 @@ const routeMap: Record<string, string> = {
   "index.html": "/",
   "merchants.html": "/for-merchants",
   "contact.html": "/contact",
+  "privacy-policy.html": "/privacy-policy",
+  "terms-of-service.html": "/terms-of-service",
 };
 
 export function ReferencePage({ file }: { file: "index.html" | "merchants.html" | "contact.html" }) {
