@@ -39,6 +39,27 @@ export function ReferenceInteractions() {
       return () => question?.removeEventListener("click", toggle);
     });
 
+    const autoRevealElements = Array.from(
+      document.querySelectorAll<HTMLElement>(
+        ".legal-hero, .legal-toc, .legal-section, .legal-contact-card, footer.site .footer-col, footer.site .footer-bottom",
+      ),
+    );
+    autoRevealElements.forEach((element) => element.classList.add("reveal"));
+
+    const staggerGroups = Array.from(
+      document.querySelectorAll<HTMLElement>(
+        ".grid.reveal, .footer-grid, .stat-strip",
+      ),
+    );
+    staggerGroups.forEach((group) => {
+      group.classList.add("reveal-stagger");
+      Array.from(group.children).forEach((child, index) => {
+        if (child instanceof HTMLElement) {
+          child.style.setProperty("--reveal-delay", `${Math.min(index, 5) * 70}ms`);
+        }
+      });
+    });
+
     const revealElements = Array.from(document.querySelectorAll<HTMLElement>(".reveal"));
     let observer: IntersectionObserver | undefined;
     if ("IntersectionObserver" in window) {
@@ -49,16 +70,19 @@ export function ReferenceInteractions() {
             observer?.unobserve(entry.target);
           }
         });
-      }, { threshold: 0.12 });
+      }, { threshold: 0.12, rootMargin: "0px 0px -7% 0px" });
       revealElements.forEach((element) => observer?.observe(element));
     } else {
       revealElements.forEach((element) => element.classList.add("in"));
     }
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const finePointer = window.matchMedia("(pointer: fine)");
     const counterElements = Array.from(document.querySelectorAll<HTMLElement>("[data-counter]"));
     const counterFrames = new Set<number>();
     const counterTimers = new Set<number>();
+    let counterObserver: IntersectionObserver | undefined;
+    let countersStarted = false;
     const requestCounterFrame = (callback: FrameRequestCallback) => {
       let frame = 0;
       frame = window.requestAnimationFrame((now) => {
@@ -84,26 +108,64 @@ export function ReferenceInteractions() {
       requestCounterFrame(update);
     };
     const runCounterCycle = () => {
+      if (countersStarted) return;
+      countersStarted = true;
       counterElements.forEach((element, index) => {
         const timer = window.setTimeout(() => {
           counterTimers.delete(timer);
-          animateCounter(element);
+          if (reducedMotion.matches) {
+            setCounterValue(element, Number(element.dataset.counter ?? 0));
+          } else {
+            animateCounter(element);
+          }
         }, index * 120);
         counterTimers.add(timer);
       });
     };
     counterElements.forEach((element) => setCounterValue(element, 0));
-    const initialCounterTimer = window.setTimeout(runCounterCycle, 250);
-    counterTimers.add(initialCounterTimer);
+    const counterSection = counterElements[0]?.closest<HTMLElement>(".stat-strip");
+    if (counterSection && "IntersectionObserver" in window) {
+      counterObserver = new IntersectionObserver((entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        runCounterCycle();
+        counterObserver?.disconnect();
+      }, { threshold: 0.35 });
+      counterObserver.observe(counterSection);
+    } else if (counterSection) {
+      runCounterCycle();
+    }
 
+    const root = document.documentElement;
     const header = document.querySelector<HTMLElement>("header.site");
-    const updateHeader = () => {
-      if (header) header.style.boxShadow = window.scrollY > 8 ? "0 8px 24px -16px rgba(0,0,0,.6)" : "none";
+    let scrollFrame: number | undefined;
+    const updateScrollEffects = () => {
+      scrollFrame = undefined;
+      const scrollRange = Math.max(1, root.scrollHeight - window.innerHeight);
+      const progress = Math.max(0, Math.min(1, window.scrollY / scrollRange));
+      root.style.setProperty("--scroll-progress", progress.toFixed(4));
+      root.style.setProperty("--scroll-shift", `${Math.min(window.scrollY * 0.035, 28)}px`);
+      header?.classList.toggle("scrolled", window.scrollY > 8);
     };
-    window.addEventListener("scroll", updateHeader, { passive: true });
+    const requestScrollEffects = () => {
+      if (scrollFrame !== undefined) return;
+      scrollFrame = window.requestAnimationFrame(updateScrollEffects);
+    };
+    window.addEventListener("scroll", requestScrollEffects, { passive: true });
+    window.addEventListener("resize", requestScrollEffects, { passive: true });
+    updateScrollEffects();
+
+    let pointerFrame: number | undefined;
+    const updatePointerGlow = (event: PointerEvent) => {
+      if (reducedMotion.matches || !finePointer.matches) return;
+      if (pointerFrame !== undefined) window.cancelAnimationFrame(pointerFrame);
+      pointerFrame = window.requestAnimationFrame(() => {
+        root.style.setProperty("--pointer-x", `${event.clientX}px`);
+        root.style.setProperty("--pointer-y", `${event.clientY}px`);
+      });
+    };
+    window.addEventListener("pointermove", updatePointerGlow, { passive: true });
 
     const orbitVisual = document.querySelector<HTMLElement>(".orbit-visual");
-    const finePointer = window.matchMedia("(pointer: fine)");
     let orbitFrame: number | undefined;
     const resetOrbit = () => {
       orbitVisual?.style.setProperty("--orbit-card-x", "0px");
@@ -137,11 +199,16 @@ export function ReferenceInteractions() {
       navAnchors.forEach((anchor) => anchor.removeEventListener("click", closeNav));
       faqCleanups.forEach((cleanup) => cleanup());
       observer?.disconnect();
+      counterObserver?.disconnect();
       counterFrames.forEach((frame) => window.cancelAnimationFrame(frame));
       counterTimers.forEach((timer) => window.clearTimeout(timer));
-      window.removeEventListener("scroll", updateHeader);
+      window.removeEventListener("scroll", requestScrollEffects);
+      window.removeEventListener("resize", requestScrollEffects);
+      window.removeEventListener("pointermove", updatePointerGlow);
       orbitVisual?.removeEventListener("pointermove", moveOrbit);
       orbitVisual?.removeEventListener("pointerleave", resetOrbit);
+      if (scrollFrame !== undefined) window.cancelAnimationFrame(scrollFrame);
+      if (pointerFrame !== undefined) window.cancelAnimationFrame(pointerFrame);
       if (orbitFrame !== undefined) window.cancelAnimationFrame(orbitFrame);
     };
   }, []);

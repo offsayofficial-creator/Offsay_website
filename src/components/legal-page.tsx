@@ -63,7 +63,7 @@ export function LegalPage({
 
       <main className="legal-main">
         <div className="wrap">
-          <section className="legal-hero">
+          <section className="legal-hero reveal">
             <span className="eyebrow">
               <i className="fa-solid fa-shield-halved" aria-hidden="true" />
               {eyebrow}
@@ -74,7 +74,7 @@ export function LegalPage({
           </section>
 
           <div className="legal-layout">
-            <aside className="legal-toc" aria-label="On this page">
+            <aside className="legal-toc reveal" aria-label="On this page">
               <span>On this page</span>
               {sections.map((section, index) => (
                 <a href={`#${section.id}`} key={section.id}>
@@ -86,7 +86,7 @@ export function LegalPage({
 
             <article className="legal-article">
               {sections.map((section, index) => (
-                <section className="legal-section" id={section.id} key={section.id}>
+                <section className="legal-section reveal" id={section.id} key={section.id}>
                   <div className="legal-section-number">
                     {String(index + 1).padStart(2, "0")}
                   </div>
@@ -96,7 +96,7 @@ export function LegalPage({
                   </div>
                 </section>
               ))}
-              <div className="legal-contact-card">
+              <div className="legal-contact-card reveal">
                 <div className="icon-tile">
                   <i className="fa-solid fa-envelope" aria-hidden="true" />
                 </div>
