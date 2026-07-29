@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
   basePath,
   assetPrefix: basePath || undefined,
+  allowedDevOrigins: ["192.168.1.21", "127.0.0.1", "localhost"],
 };
 
 export default nextConfig;

@@ -58,45 +58,43 @@ export function ReferenceInteractions() {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const counterElements = Array.from(document.querySelectorAll<HTMLElement>("[data-counter]"));
     const counterFrames = new Set<number>();
+    const counterTimers = new Set<number>();
+    const requestCounterFrame = (callback: FrameRequestCallback) => {
+      let frame = 0;
+      frame = window.requestAnimationFrame((now) => {
+        counterFrames.delete(frame);
+        callback(now);
+      });
+      counterFrames.add(frame);
+    };
     const setCounterValue = (element: HTMLElement, value: number) => {
       element.textContent = `${value}${element.dataset.counterSuffix ?? ""}`;
     };
     const animateCounter = (element: HTMLElement) => {
-      if (element.dataset.counterAnimated === "true") return;
-      element.dataset.counterAnimated = "true";
       const target = Number(element.dataset.counter ?? 0);
-      if (reducedMotion.matches) {
-        setCounterValue(element, target);
-        return;
-      }
-      const duration = 1200;
       const startedAt = performance.now();
+      const duration = 1700;
+      setCounterValue(element, 0);
       const update = (now: number) => {
         const progress = Math.min(1, (now - startedAt) / duration);
         const eased = 1 - Math.pow(1 - progress, 3);
         setCounterValue(element, Math.round(target * eased));
-        if (progress < 1) {
-          const frame = window.requestAnimationFrame(update);
-          counterFrames.add(frame);
-        }
+        if (progress < 1) requestCounterFrame(update);
       };
-      setCounterValue(element, 0);
-      const frame = window.requestAnimationFrame(update);
-      counterFrames.add(frame);
+      requestCounterFrame(update);
     };
-    let counterObserver: IntersectionObserver | undefined;
-    if ("IntersectionObserver" in window) {
-      counterObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          animateCounter(entry.target as HTMLElement);
-          counterObserver?.unobserve(entry.target);
-        });
-      }, { threshold: 0.55 });
-      counterElements.forEach((element) => counterObserver?.observe(element));
-    } else {
-      counterElements.forEach(animateCounter);
-    }
+    const runCounterCycle = () => {
+      counterElements.forEach((element, index) => {
+        const timer = window.setTimeout(() => {
+          counterTimers.delete(timer);
+          animateCounter(element);
+        }, index * 120);
+        counterTimers.add(timer);
+      });
+    };
+    counterElements.forEach((element) => setCounterValue(element, 0));
+    const initialCounterTimer = window.setTimeout(runCounterCycle, 250);
+    counterTimers.add(initialCounterTimer);
 
     const header = document.querySelector<HTMLElement>("header.site");
     const updateHeader = () => {
@@ -139,8 +137,8 @@ export function ReferenceInteractions() {
       navAnchors.forEach((anchor) => anchor.removeEventListener("click", closeNav));
       faqCleanups.forEach((cleanup) => cleanup());
       observer?.disconnect();
-      counterObserver?.disconnect();
       counterFrames.forEach((frame) => window.cancelAnimationFrame(frame));
+      counterTimers.forEach((timer) => window.clearTimeout(timer));
       window.removeEventListener("scroll", updateHeader);
       orbitVisual?.removeEventListener("pointermove", moveOrbit);
       orbitVisual?.removeEventListener("pointerleave", resetOrbit);

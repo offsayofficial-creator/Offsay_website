@@ -174,7 +174,7 @@ footer.site{border-top:1px solid var(--border); padding:64px 0 32px; margin-top:
 .stat-strip{display:flex; border:1px solid var(--border); border-radius:var(--radius); background:var(--surface); overflow:hidden;}
 .stat-strip .stat{flex:1; text-align:center; padding:30px 20px; border-right:1px solid var(--border);}
 .stat-strip .stat:last-child{border-right:none;}
-.stat-num{font-family:'Poppins',sans-serif; font-size:32px; font-weight:700;}
+.stat-num{font-family:'Poppins',sans-serif;font-size:32px;font-weight:700;font-variant-numeric:tabular-nums}
 
 .step{display:flex; gap:20px;}
 .step-num{
@@ -271,7 +271,7 @@ footer.site{border-top:1px solid var(--border); padding:64px 0 32px; margin-top:
   .orbit-card-copy{padding:9px}.orbit-offer-title{font-size:9px}.orbit-store{font-size:7.5px}
   .orbit-chip{padding:6px 10px;font-size:9px}
   .orbit-relationship-vector{opacity:.64}.relationship-person-one{display:none}
-  .orbit-salon-card{display:none}
+  .orbit-fashion-card{display:none}
 }
 @media (max-width:380px){.orbit-visual{width:78vw}.orbit-chip{display:none}.orbit-card-pos[style*="right:-8%"]{right:-4%!important}.orbit-card-pos[style*="left:-10%"]{left:-4%!important}}
 
