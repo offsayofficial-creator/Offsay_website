@@ -15,5 +15,5 @@ export const siteConfig = {
   playStoreUrl: process.env.NEXT_PUBLIC_PLAY_STORE_URL?.trim() || "",
   appStoreUrl: process.env.NEXT_PUBLIC_APP_STORE_URL?.trim() || "",
   contactEmail:
-    process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() || "hello@offsay.example",
+    process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() || "offsay.official@gmail.com",
 };
