@@ -27,6 +27,32 @@ export function ReferenceInteractions() {
     const navAnchors = Array.from(navLinks?.querySelectorAll("a") ?? []);
     navAnchors.forEach((anchor) => anchor.addEventListener("click", closeNav));
 
+    const storeBadges = Array.from(document.querySelectorAll<HTMLAnchorElement>(".store-badge"));
+    const comingSoonToast = document.createElement("div");
+    comingSoonToast.className = "coming-soon-toast";
+    comingSoonToast.setAttribute("role", "status");
+    comingSoonToast.setAttribute("aria-live", "polite");
+    comingSoonToast.innerHTML = `
+      <span class="coming-soon-toast-icon" aria-hidden="true"><i class="fa-solid fa-bell"></i></span>
+      <span><strong>Coming soon</strong><small data-coming-soon-message>OffSay will be available soon.</small></span>
+    `;
+    document.body.appendChild(comingSoonToast);
+    let toastTimer: number | undefined;
+    const showComingSoon = (event: Event) => {
+      event.preventDefault();
+      const badge = event.currentTarget as HTMLAnchorElement;
+      const storeName = badge.textContent?.includes("Google Play") ? "Google Play" : "the App Store";
+      const message = comingSoonToast.querySelector<HTMLElement>("[data-coming-soon-message]");
+      if (message) message.textContent = `OffSay will be available on ${storeName} soon.`;
+      comingSoonToast.classList.add("show");
+      if (toastTimer !== undefined) window.clearTimeout(toastTimer);
+      toastTimer = window.setTimeout(() => comingSoonToast.classList.remove("show"), 3000);
+    };
+    storeBadges.forEach((badge) => {
+      badge.setAttribute("aria-label", `${badge.textContent?.trim() ?? "App download"} — coming soon`);
+      badge.addEventListener("click", showComingSoon);
+    });
+
     const faqItems = Array.from(document.querySelectorAll<HTMLElement>(".faq-item"));
     const faqCleanups = faqItems.map((item) => {
       const question = item.querySelector<HTMLElement>(".faq-q");
@@ -197,6 +223,9 @@ export function ReferenceInteractions() {
       navToggle?.removeEventListener("click", toggleNav);
       document.body.classList.remove("nav-open");
       navAnchors.forEach((anchor) => anchor.removeEventListener("click", closeNav));
+      storeBadges.forEach((badge) => badge.removeEventListener("click", showComingSoon));
+      if (toastTimer !== undefined) window.clearTimeout(toastTimer);
+      comingSoonToast.remove();
       faqCleanups.forEach((cleanup) => cleanup());
       observer?.disconnect();
       counterObserver?.disconnect();
