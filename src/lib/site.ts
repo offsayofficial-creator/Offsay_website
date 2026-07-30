@@ -7,7 +7,7 @@ export const siteConfig = {
     "Discover verified local offers nearby and give local businesses a simpler way to reach the right customers.",
   siteUrl: cleanUrl(
     process.env.NEXT_PUBLIC_SITE_URL,
-    "https://offsay.example",
+    "https://offsay.in",
   ),
   portalUrl:
     process.env.NEXT_PUBLIC_PORTAL_URL?.trim() ||
@@ -16,4 +16,10 @@ export const siteConfig = {
   appStoreUrl: process.env.NEXT_PUBLIC_APP_STORE_URL?.trim() || "",
   contactEmail:
     process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() || "offsay.official@gmail.com",
+  socialLinks: {
+    instagram:
+      "https://www.instagram.com/offsay.official?igsh=MTdwdGc4dXk2Mjg0Zg==",
+    facebook: "https://www.facebook.com/share/1AXh2eumP4/",
+    x: "https://x.com/Offsay_official",
+  },
 };

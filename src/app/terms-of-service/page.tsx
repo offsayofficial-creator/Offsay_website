@@ -1,10 +1,12 @@
-import type { Metadata } from "next";
 import { LegalPage } from "@/components/legal-page";
+import { createPageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: "Terms of Service",
-  description: "The terms governing customer and merchant use of OffSay.",
-};
+  description: "Read the terms governing customer, merchant, manager, and website visitor use of OffSay.",
+  path: "/terms-of-service/",
+  index: false,
+});
 
 export default function TermsOfServicePage() {
   return (
