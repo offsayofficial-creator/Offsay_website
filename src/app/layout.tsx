@@ -6,12 +6,24 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
-  title: { default: "OffSay — Every Nearby Offer, In One App", template: "%s — OffSay" },
-  description: "Discover, save, and redeem nearby offers across every category with OffSay.",
+  title: { default: "OffSay — Nearby Offers & Local Deals", template: "%s — OffSay" },
+  description: "Discover verified nearby offers and local deals from restaurants, shops, fashion, services, and more with OffSay.",
   applicationName: "OffSay",
-  openGraph: { type: "website", siteName: "OffSay", title: "OffSay — Every Nearby Offer, In One App", description: siteConfig.description, url: siteConfig.siteUrl, images: [{ url: `${basePath}/og.png`, width: 1200, height: 630, alt: "OffSay — every nearby offer, in one app" }] },
-  twitter: { card: "summary_large_image", title: "OffSay — Every Nearby Offer, In One App", description: siteConfig.description, images: [`${basePath}/og.png`] },
+  alternates: { canonical: siteConfig.siteUrl },
+  openGraph: { type: "website", siteName: "OffSay", title: "OffSay — Nearby Offers & Local Deals", description: siteConfig.description, url: siteConfig.siteUrl, images: [{ url: `${basePath}/og.png`, width: 1200, height: 630, alt: "OffSay — discover nearby offers and local deals" }] },
+  twitter: { card: "summary_large_image", title: "OffSay — Nearby Offers & Local Deals", description: siteConfig.description, images: [`${basePath}/og.png`] },
   icons: { icon: `${basePath}/brand/offsay-icon.png`, apple: `${basePath}/brand/offsay-icon.png` },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
 };
 
 export const viewport: Viewport = { themeColor: "#0b0a14", colorScheme: "dark" };

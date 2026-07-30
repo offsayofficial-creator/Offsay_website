@@ -1,10 +1,12 @@
-import type { Metadata } from "next";
 import { LegalPage } from "@/components/legal-page";
+import { createPageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: "Privacy Policy",
-  description: "Learn how OffSay collects, uses, protects, and shares information.",
-};
+  description: "Learn how OffSay collects, uses, protects, and shares customer, merchant, and website visitor information.",
+  path: "/privacy-policy/",
+  index: false,
+});
 
 export default function PrivacyPolicyPage() {
   return (
