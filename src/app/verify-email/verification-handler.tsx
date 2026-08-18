@@ -6,7 +6,7 @@ import { getApp, getApps, initializeApp } from "firebase/app";
 import { applyActionCode, getAuth } from "firebase/auth";
 import styles from "./verify-email.module.css";
 
-type ViewState = "working" | "success" | "expired" | "error";
+type ViewState = "working" | "success" | "handoff" | "expired" | "error";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -29,15 +29,46 @@ async function apiBaseUrl() {
 }
 
 function verificationIdFrom(params: URLSearchParams) {
+  const visited = new Set<string>();
+  const inspect = (value: string | null, depth = 0): string | null => {
+    if (!value || depth > 5 || visited.has(value)) return null;
+    visited.add(value);
+    let decoded = value;
+    try {
+      decoded = decodeURIComponent(value);
+    } catch {
+      // The value may already be decoded.
+    }
+    const plainMatch = decoded.match(
+      /(?:^|[?#&])verification_id=([0-9a-f-]{36})(?:$|[&#])/i,
+    );
+    if (plainMatch) return plainMatch[1];
+    try {
+      const url = new URL(decoded, window.location.origin);
+      const direct = url.searchParams.get("verification_id");
+      if (direct) return direct;
+      const hash = new URLSearchParams(url.hash.replace(/^#/, ""));
+      const fromHash = hash.get("verification_id");
+      if (fromHash) return fromHash;
+      for (const key of ["continueUrl", "continue_url", "link", "url"]) {
+        const nested = inspect(url.searchParams.get(key), depth + 1);
+        if (nested) return nested;
+      }
+    } catch {
+      return null;
+    }
+    return decoded === value ? null : inspect(decoded, depth + 1);
+  };
+
   const direct = params.get("verification_id");
   if (direct) return direct;
-  const continueUrl = params.get("continueUrl");
-  if (!continueUrl) return null;
-  try {
-    return new URL(continueUrl).searchParams.get("verification_id");
-  } catch {
-    return null;
+  const fromHash = inspect(window.location.hash);
+  if (fromHash) return fromHash;
+  for (const key of ["continueUrl", "continue_url", "link", "url"]) {
+    const nested = inspect(params.get(key));
+    if (nested) return nested;
   }
+  return inspect(document.referrer);
 }
 
 export function EmailVerificationHandler() {
@@ -54,24 +85,47 @@ export function EmailVerificationHandler() {
     const verify = async () => {
       const verificationId = verificationIdFrom(params);
       const oobCode = params.get("oobCode");
-      if (!verificationId || !oobCode || params.get("mode") !== "verifyEmail") {
+      const mode = params.get("mode");
+      if (oobCode && mode !== "verifyEmail") {
         setState("error");
         setMessage("This verification link is incomplete or invalid.");
         return;
       }
-      try {
-        if (!firebaseConfig.apiKey || !firebaseConfig.projectId) {
-          throw new Error("Email verification is not configured.");
+      // With Firebase's default email handler, Firebase consumes the action
+      // code first and redirects here with only the Offsay verification ID.
+      // A custom action handler sends mode/oobCode directly, so apply it here.
+      if (oobCode) {
+        try {
+          if (!firebaseConfig.apiKey || !firebaseConfig.projectId) {
+            throw new Error("Email verification is not configured.");
+          }
+          const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+          await applyActionCode(getAuth(app), oobCode);
+        } catch (error) {
+          const code = (error as { code?: string }).code || "";
+          if (
+            !code.includes("expired-action-code") &&
+            !code.includes("invalid-action-code")
+          ) {
+            setState("error");
+            setMessage(
+              error instanceof Error ? error.message : "Email verification failed.",
+            );
+            return;
+          }
         }
-        const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
-        await applyActionCode(getAuth(app), oobCode);
-      } catch (error) {
-        const code = (error as { code?: string }).code || "";
-        if (!code.includes("expired-action-code") && !code.includes("invalid-action-code")) {
-          setState("error");
-          setMessage(error instanceof Error ? error.message : "Email verification failed.");
-          return;
-        }
+      }
+
+      // Firebase's hosted handler can consume a valid code and then open the
+      // configured Continue URL without forwarding Offsay's challenge ID.
+      // Do not report a false verification failure. The app/portal must now
+      // perform the authoritative Firebase-to-Django reconciliation.
+      if (!verificationId) {
+        setState("handoff");
+        setMessage(
+          "Return to the Offsay app and tap ‘I’ve verified my email’. Merchants can continue to the login page, where Offsay will check and activate the verified account.",
+        );
+        return;
       }
       try {
         const base = await apiBaseUrl();
@@ -111,8 +165,13 @@ export function EmailVerificationHandler() {
   return (
     <section className={styles.card}>
       <img src="/brand/offsay-icon.png" alt="Offsay" className={styles.logo} />
-      <span className={`${styles.icon} ${styles[state]}`} aria-hidden="true">
-        {state === "working" ? "…" : state === "success" ? "✓" : "!"}
+      <span
+        className={`${styles.icon} ${
+          state === "handoff" ? styles.working : styles[state]
+        }`}
+        aria-hidden="true"
+      >
+        {state === "working" ? "…" : state === "success" ? "✓" : state === "handoff" ? "→" : "!"}
       </span>
       <p className={styles.kicker}>SECURE EMAIL VERIFICATION</p>
       <h1>
@@ -120,6 +179,8 @@ export function EmailVerificationHandler() {
           ? "Verifying your email"
           : state === "success"
             ? "Email verified"
+            : state === "handoff"
+              ? "Finish in Offsay"
             : state === "expired"
               ? "Link expired"
               : "Verification failed"}
@@ -128,6 +189,11 @@ export function EmailVerificationHandler() {
       {state === "success" && (
         <a className={styles.action} href={merchant ? `${portalUrl}/login` : "/"}>
           {merchant ? "Open merchant login" : "Return to Offsay"}
+        </a>
+      )}
+      {state === "handoff" && (
+        <a className={styles.action} href={`${portalUrl}/login`}>
+          Open merchant login
         </a>
       )}
       {(state === "expired" || state === "error") && (
