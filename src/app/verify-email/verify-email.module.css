@@ -30,6 +30,12 @@
 .message { margin: 16px auto 0; max-width: 380px; color: #7e788f; font-size: 15px; line-height: 1.7; }
 .action { display: inline-flex; margin-top: 26px; padding: 14px 22px; border-radius: 14px; color: white; font-weight: 700; background: linear-gradient(135deg, #8e72ff, #5b36e8); box-shadow: 0 12px 28px rgba(108, 76, 241, .25); }
 .help { margin: 22px 0 0; color: #7e788f; font-size: 13px; line-height: 1.55; }
+.form { display: grid; gap: 10px; margin-top: 24px; text-align: left; }
+.form label { color: #211d35; font-size: 12px; font-weight: 700; }
+.form input { width: 100%; min-height: 50px; padding: 0 15px; border: 1px solid #ded7f0; border-radius: 14px; color: #211d35; background: #fff; font: inherit; outline: none; }
+.form input:focus { border-color: #6c4cf1; box-shadow: 0 0 0 4px rgba(108, 76, 241, .1); }
+.form .action { justify-content: center; width: 100%; margin-top: 8px; border: 0; cursor: pointer; }
+.form .action:disabled { cursor: wait; opacity: .68; }
 
 @keyframes pulse { 50% { transform: scale(1.06); opacity: .72; } }
 
