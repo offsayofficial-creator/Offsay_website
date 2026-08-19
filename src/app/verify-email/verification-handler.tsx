@@ -5,15 +5,9 @@ import { useSearchParams } from "next/navigation";
 import { getApp, getApps, initializeApp } from "firebase/app";
 import { applyActionCode, getAuth } from "firebase/auth";
 import styles from "./verify-email.module.css";
+import { firebaseClientConfig } from "@/lib/firebase-client-config";
 
 type ViewState = "working" | "success" | "handoff" | "expired" | "error";
-
-const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-};
 
 async function apiBaseUrl() {
   const explicit = process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, "");
@@ -96,10 +90,7 @@ export function EmailVerificationHandler() {
       // A custom action handler sends mode/oobCode directly, so apply it here.
       if (oobCode) {
         try {
-          if (!firebaseConfig.apiKey || !firebaseConfig.projectId) {
-            throw new Error("Email verification is not configured.");
-          }
-          const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+          const app = getApps().length ? getApp() : initializeApp(firebaseClientConfig);
           await applyActionCode(getAuth(app), oobCode);
         } catch (error) {
           const code = (error as { code?: string }).code || "";

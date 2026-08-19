@@ -5,15 +5,9 @@ import { useSearchParams } from "next/navigation";
 import { getApp, getApps, initializeApp } from "firebase/app";
 import { getAuth, getIdToken, isSignInWithEmailLink, signInWithEmailLink, signOut } from "firebase/auth";
 import styles from "../../verify-email/verify-email.module.css";
+import { firebaseClientConfig } from "@/lib/firebase-client-config";
 
 type ViewState = "working" | "email" | "success" | "expired" | "error";
-
-const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-};
 
 async function apiBaseUrl() {
   const explicit = process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, "");
@@ -55,8 +49,7 @@ export function PasswordResetVerificationHandler() {
   const portalUrl = (process.env.NEXT_PUBLIC_PORTAL_URL || "https://offsayofficial-creator.github.io/offsay-config").replace(/\/$/, "");
 
   const finish = async (address: string, id = requestId, type = clientType) => {
-    if (!firebaseConfig.apiKey || !firebaseConfig.projectId) throw new Error("Secure email verification is not configured.");
-    const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+    const app = getApps().length ? getApp() : initializeApp(firebaseClientConfig);
     const auth = getAuth(app);
     if (!isSignInWithEmailLink(auth, window.location.href)) throw new Error("This password-reset link is incomplete or has already been used.");
     const credential = await signInWithEmailLink(auth, address.trim().toLowerCase(), window.location.href);
