@@ -10,14 +10,9 @@ import { firebaseClientConfig } from "@/lib/firebase-client-config";
 type ViewState = "working" | "email" | "success" | "expired" | "error";
 
 async function apiBaseUrl() {
-  const explicit = process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, "");
-  if (explicit) return explicit.endsWith("/api/v1") ? explicit : `${explicit}/api/v1`;
-  const source = process.env.NEXT_PUBLIC_REMOTE_CONFIG_URL || "https://raw.githubusercontent.com/offsayofficial-creator/offsay-config/main/config.json";
-  const response = await fetch(source, { cache: "no-store" });
-  if (!response.ok) throw new Error("Offsay services are temporarily unavailable.");
-  const config = (await response.json()) as { backendUrl?: string };
-  if (!config.backendUrl) throw new Error("Offsay services are not configured.");
-  return `${config.backendUrl.replace(/\/$/, "")}/api/v1`;
+  const base = (process.env.NEXT_PUBLIC_API_BASE_URL || "https://api.offsay.in")
+    .replace(/\/$/, "");
+  return base.endsWith("/api/v1") ? base : `${base}/api/v1`;
 }
 
 function nestedParameter(params: URLSearchParams, name: string) {
@@ -116,7 +111,7 @@ export function PasswordResetVerificationHandler() {
   const [submitting, setSubmitting] = useState(false);
   const [requestId, setRequestId] = useState("");
   const [clientType, setClientType] = useState("CUSTOMER_APP");
-  const portalUrl = (process.env.NEXT_PUBLIC_PORTAL_URL || "https://offsayofficial-creator.github.io/offsay-config").replace(/\/$/, "");
+  const portalUrl = (process.env.NEXT_PUBLIC_PORTAL_URL || "https://merchant.offsay.in").replace(/\/$/, "");
 
   const finish = async (address: string, id = requestId, type = clientType) => {
     const base = await apiBaseUrl();

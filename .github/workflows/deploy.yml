@@ -35,9 +35,9 @@ jobs:
         env:
           NEXT_PUBLIC_BASE_PATH: ""
           NEXT_PUBLIC_SITE_URL: https://offsay.in
-          NEXT_PUBLIC_PORTAL_URL: https://offsayofficial-creator.github.io/offsay-config/
-          NEXT_PUBLIC_CONTACT_EMAIL: hello@offsay.app
-          NEXT_PUBLIC_REMOTE_CONFIG_URL: https://raw.githubusercontent.com/offsayofficial-creator/offsay-config/main/config.json
+          NEXT_PUBLIC_PORTAL_URL: https://merchant.offsay.in
+          NEXT_PUBLIC_API_BASE_URL: https://api.offsay.in
+          NEXT_PUBLIC_CONTACT_EMAIL: offsay.official@gmail.com
           # Firebase web client configuration is public by design. Authentication
           # security is enforced by Firebase rules and Django token verification.
           NEXT_PUBLIC_FIREBASE_API_KEY: AIzaSyDnQkBzs4TrTQqgBQT6Xt1xcNFJqx8s51g
