@@ -20,7 +20,7 @@ export const siteConfig = {
     process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() || "offsay.official@gmail.com",
   socialLinks: {
     instagram:
-      "https://www.instagram.com/offsay.official?igsh=MTdwdGc4dXk2Mjg0Zg==",
+      "https://www.instagram.com/offsay.official/",
     facebook: "https://www.facebook.com/share/1AXh2eumP4/",
     x: "https://x.com/Offsay_official",
   },
