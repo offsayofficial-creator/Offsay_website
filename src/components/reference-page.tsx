@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { ReferenceInteractions } from "@/components/reference-interactions";
+import { siteConfig } from "@/lib/site";
 
 const routeMap: Record<string, string> = {
   "index.html": "/",
@@ -20,6 +21,14 @@ export function ReferencePage({ file }: { file: "index.html" | "merchants.html" 
     `<span class="logo-mark logo-image"><img src="${basePath}/brand/offsay-icon.png" alt="" /></span>`,
   );
   html = html.replaceAll("font-family:'Space Grotesk',sans-serif", "font-family:'Poppins',sans-serif");
+  html = html.replaceAll(
+    "{{PLAY_STORE_URL}}",
+    siteConfig.playStoreUrl
+      .replaceAll("&", "&amp;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;"),
+  );
 
   for (const [from, to] of Object.entries(routeMap)) {
     const target = to === "/" ? `${basePath}/` : `${basePath}${to}`;

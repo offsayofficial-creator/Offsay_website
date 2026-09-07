@@ -12,7 +12,9 @@ export const siteConfig = {
   portalUrl:
     process.env.NEXT_PUBLIC_PORTAL_URL?.trim() ||
     "https://merchant.offsay.in",
-  playStoreUrl: process.env.NEXT_PUBLIC_PLAY_STORE_URL?.trim() || "",
+  playStoreUrl:
+    process.env.NEXT_PUBLIC_PLAY_STORE_URL?.trim() ||
+    "https://play.google.com/store/apps/details?id=com.offsay.offsayapp",
   appStoreUrl: process.env.NEXT_PUBLIC_APP_STORE_URL?.trim() || "",
   contactEmail:
     process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() || "offsay.official@gmail.com",

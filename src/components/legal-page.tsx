@@ -51,9 +51,6 @@ export function LegalPage({
             <Link href="/contact">Contact</Link>
           </nav>
           <div className="nav-cta">
-            <Link href="/#download" className="btn btn-primary btn-sm">
-              Download App
-            </Link>
             <button className="nav-toggle" id="navToggle" type="button">
               <i className="fa-solid fa-bars" aria-hidden="true" />
             </button>

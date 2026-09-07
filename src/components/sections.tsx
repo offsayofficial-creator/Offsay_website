@@ -16,8 +16,8 @@ export function AppCta({ compact = false }: { compact?: boolean }) {
     <div className={compact ? "app-cta compact" : "app-cta"}>
       <span className="status-dot" />
       <div><strong>{available ? "Get the OffSay app" : "OffSay app coming soon"}</strong><span>{available ? "Choose your app store to continue." : "We’re preparing a polished mobile experience for launch."}</span></div>
-      {siteConfig.playStoreUrl && <a className="button button-dark" href={siteConfig.playStoreUrl}>Google Play</a>}
-      {siteConfig.appStoreUrl && <a className="button button-dark" href={siteConfig.appStoreUrl}>App Store</a>}
+      {siteConfig.playStoreUrl && <a className="button button-dark" href={siteConfig.playStoreUrl} target="_blank" rel="noopener noreferrer">Google Play</a>}
+      {siteConfig.appStoreUrl && <a className="button button-dark" href={siteConfig.appStoreUrl} target="_blank" rel="noopener noreferrer">App Store</a>}
       {!available && <span className="coming-pill">Coming soon</span>}
     </div>
   );

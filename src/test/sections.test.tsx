@@ -3,10 +3,16 @@ import { describe, expect, it } from "vitest";
 import { AppCta, PageHero } from "@/components/sections";
 
 describe("public marketing components", () => {
-  it("shows a coming-soon state while store links are unavailable", () => {
+  it("links to the live Google Play listing", () => {
     render(<AppCta />);
-    expect(screen.getByText("OffSay app coming soon")).toBeInTheDocument();
-    expect(screen.getByText("Coming soon")).toBeInTheDocument();
+    const link = screen.getByRole("link", { name: "Google Play" });
+    expect(link).toHaveAttribute(
+      "href",
+      "https://play.google.com/store/apps/details?id=com.offsay.offsayapp",
+    );
+    expect(link).toHaveAttribute("target", "_blank");
+    expect(link).toHaveAttribute("rel", "noopener noreferrer");
+    expect(screen.queryByText("Coming soon")).not.toBeInTheDocument();
   });
 
   it("renders page hierarchy accessibly", () => {
