@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   alternates: { canonical: siteConfig.siteUrl },
   openGraph: { type: "website", siteName: "OffSay", title: "OffSay — Nearby Offers & Local Deals", description: siteConfig.description, url: siteConfig.siteUrl, images: [{ url: `${basePath}/og.png`, width: 1200, height: 630, alt: "OffSay — discover nearby offers and local deals" }] },
   twitter: { card: "summary_large_image", title: "OffSay — Nearby Offers & Local Deals", description: siteConfig.description, images: [`${basePath}/og.png`] },
-  icons: { icon: `${basePath}/brand/offsay-icon.png`, apple: `${basePath}/brand/offsay-icon.png` },
+  icons: { apple: `${basePath}/brand/offsay-icon.png` },
   robots: {
     index: true,
     follow: true,
@@ -32,6 +32,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <head>
+        <link rel="icon" type="image/png" href="/favicon.png" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
       </head>
       <body>{children}</body>
