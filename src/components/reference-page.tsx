@@ -35,5 +35,5 @@ export function ReferencePage({ file }: { file: "index.html" | "merchants.html" 
     html = html.replaceAll(`${from}#`, `${target}#`).replaceAll(`href="${from}"`, `href="${target}"`);
   }
 
-  return <><div dangerouslySetInnerHTML={{ __html: html }} /><ReferenceInteractions /></>;
+  return <ReferenceInteractions html={html} />;
 }

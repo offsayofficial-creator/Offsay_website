@@ -306,13 +306,14 @@ footer.site{border-top:1px solid var(--border); padding:64px 0 32px; margin-top:
 @keyframes ctaGlowSweep{0%,20%{transform:translateX(-65%) rotate(10deg);opacity:0}45%{opacity:1}75%,100%{transform:translateX(185%) rotate(10deg);opacity:0}}
 @keyframes ctaGlowBreathe{0%,100%{transform:scale(.92);opacity:.45}50%{transform:scale(1.08);opacity:.8}}
 
-/* reveal on scroll */
-.reveal{opacity:0;transform:translate3d(0,30px,0) scale(.985);filter:blur(5px);transition:opacity .8s var(--ease-smooth),transform .9s var(--ease-premium),filter .7s ease;will-change:opacity,transform,filter}
-.reveal.in{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}
-.reveal-stagger> *{opacity:0;transform:translate3d(0,22px,0);transition:opacity .65s var(--ease-smooth),transform .75s var(--ease-premium);transition-delay:var(--reveal-delay,0ms)}
-.reveal-stagger.in> *,.reveal.in .reveal-stagger> *{opacity:1;transform:translate3d(0,0,0)}
-.legal-section.reveal{transform:translate3d(18px,24px,0) scale(.99)}
-.legal-section.reveal.in{transform:translate3d(0,0,0) scale(1)}
+/* Hide offscreen content only after JavaScript has installed reveal handling. */
+.reveal,.reveal-stagger> *{opacity:1;transform:none;filter:none}
+.reveal.reveal-ready{transition:opacity .8s ease,transform .8s cubic-bezier(.22,1,.36,1),filter .8s ease}
+.reveal.reveal-ready:not(.in){opacity:0;transform:translateY(30px);filter:blur(3px)}
+.reveal-stagger.reveal-ready> *{transition:opacity .65s ease,transform .75s cubic-bezier(.22,1,.36,1);transition-delay:var(--reveal-delay,0ms)}
+.reveal-stagger.reveal-ready:not(.in)> *{opacity:0;transform:translateY(22px)}
+.nav-toggle:focus-visible{outline:2px solid var(--violet-light);outline-offset:4px}
+@media(max-width:720px){header.site.scrolled{backdrop-filter:none}}
 
 /* ---------- Responsive ---------- */
 @media (max-width:960px){
@@ -470,4 +471,59 @@ main{min-height:60vh}
   body::before{display:none}
   .bg-grid{transform:none}
   .reveal,.reveal-stagger>*,.legal-section.reveal{opacity:1!important;transform:none!important;filter:none!important}
+}
+
+/* Shared WhatsApp contact shortcut. */
+.whatsapp-float {
+  position: fixed;
+  right: calc(24px + env(safe-area-inset-right, 0px));
+  bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+  width: 60px;
+  height: 60px;
+  border: 1px solid rgba(184,255,213,.48);
+  border-radius: 21px;
+  background: radial-gradient(ellipse at 24% 0%,rgba(178,255,207,.3),transparent 65%),linear-gradient(145deg,#20bb6b 0%,#109750 52%,#08723e 100%);
+  color: #fff;
+  font-size: 32px;
+  line-height: 1;
+  text-decoration: none;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.3),inset 0 -2px 4px rgba(0,57,30,.22),0 0 0 5px rgba(36,211,113,.055),0 12px 28px rgba(0,0,0,.38),0 4px 18px rgba(16,185,96,.16);
+  transition: transform .22s ease,box-shadow .22s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.whatsapp-float::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 16px;
+  pointer-events: none;
+}
+.whatsapp-float i { display:block; filter:drop-shadow(0 2px 2px rgba(0,65,34,.22)); }
+@media (hover:hover) {
+  .whatsapp-float:hover {
+    transform: translateY(-3px);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.4),0 0 0 6px rgba(36,211,113,.09),0 16px 32px rgba(0,0,0,.4),0 6px 24px rgba(16,185,96,.24);
+  }
+}
+.whatsapp-float:active { transform:scale(.96); }
+.whatsapp-float:focus-visible { outline:3px solid #fff; outline-offset:6px; }
+@media (max-width:640px) {
+  .whatsapp-float {
+    right:calc(16px + env(safe-area-inset-right,0px));
+    bottom:calc(16px + env(safe-area-inset-bottom,0px));
+    width:56px;
+    height:56px;
+    border-radius:19px;
+    font-size:30px;
+  }
+  .whatsapp-float::before { border-radius:14px; }
+  .coming-soon-toast { bottom:calc(88px + env(safe-area-inset-bottom,0px)); }
+}
+@media (prefers-reduced-motion:reduce) {
+  .whatsapp-float:hover,.whatsapp-float:active { transform:none; }
 }
