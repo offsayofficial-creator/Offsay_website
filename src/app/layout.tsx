@@ -35,7 +35,19 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <link rel="icon" type="image/png" href="/favicon.png" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <a
+          className="whatsapp-float"
+          href="https://wa.me/918891709012"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Chat on WhatsApp (opens in a new tab)"
+          title="Chat on WhatsApp"
+        >
+          <i className="fa-brands fa-whatsapp" aria-hidden="true" />
+        </a>
+      </body>
     </html>
   );
 }

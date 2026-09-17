@@ -1,11 +1,15 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 
-export function ReferenceInteractions() {
+export function ReferenceInteractions({ html }: { html?: string }) {
+  const contentRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
   useEffect(() => {
-    const navToggle = document.getElementById("navToggle");
-    const navLinks = document.getElementById("navLinks");
+    const scope = contentRef.current ?? document;
+    const navToggle = scope.querySelector<HTMLElement>("#navToggle");
+    const navLinks = scope.querySelector<HTMLElement>("#navLinks");
     const updateMenuIcon = () => {
       const icon = navToggle?.querySelector("i");
       const isOpen = navLinks?.classList.contains("open") ?? false;
@@ -23,12 +27,17 @@ export function ReferenceInteractions() {
     };
     navToggle?.setAttribute("aria-expanded", "false");
     navToggle?.setAttribute("aria-label", "Toggle navigation");
+    navToggle?.setAttribute("aria-controls", "navLinks");
+    const onEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") { closeNav(); navToggle?.focus(); }
+    };
+    document.addEventListener("keydown", onEscape);
     navToggle?.addEventListener("click", toggleNav);
     const navAnchors = Array.from(navLinks?.querySelectorAll("a") ?? []);
     navAnchors.forEach((anchor) => anchor.addEventListener("click", closeNav));
 
     const unavailableStoreBadges = Array.from(
-      document.querySelectorAll<HTMLAnchorElement>(".store-badge[data-coming-soon]"),
+      scope.querySelectorAll<HTMLAnchorElement>(".store-badge[data-coming-soon]"),
     );
     const comingSoonToast = document.createElement("div");
     comingSoonToast.className = "coming-soon-toast";
@@ -55,7 +64,7 @@ export function ReferenceInteractions() {
       badge.addEventListener("click", showComingSoon);
     });
 
-    const faqItems = Array.from(document.querySelectorAll<HTMLElement>(".faq-item"));
+    const faqItems = Array.from(scope.querySelectorAll<HTMLElement>(".faq-item"));
     const faqCleanups = faqItems.map((item) => {
       const question = item.querySelector<HTMLElement>(".faq-q");
       const toggle = () => {
@@ -68,14 +77,14 @@ export function ReferenceInteractions() {
     });
 
     const autoRevealElements = Array.from(
-      document.querySelectorAll<HTMLElement>(
+      scope.querySelectorAll<HTMLElement>(
         ".legal-hero, .legal-toc, .legal-section, .legal-contact-card, footer.site .footer-col, footer.site .footer-bottom",
       ),
     );
     autoRevealElements.forEach((element) => element.classList.add("reveal"));
 
     const staggerGroups = Array.from(
-      document.querySelectorAll<HTMLElement>(
+      scope.querySelectorAll<HTMLElement>(
         ".grid.reveal, .footer-grid, .stat-strip",
       ),
     );
@@ -88,7 +97,16 @@ export function ReferenceInteractions() {
       });
     });
 
-    const revealElements = Array.from(document.querySelectorAll<HTMLElement>(".reveal"));
+    const revealElements = Array.from(scope.querySelectorAll<HTMLElement>(".reveal, .reveal-stagger"));
+    const revealVisible = () => {
+      revealElements.forEach((element) => {
+        if (element.getBoundingClientRect().top < window.innerHeight - 24) element.classList.add("in");
+      });
+    };
+    revealElements.forEach((element) => {
+      if (element.getBoundingClientRect().top >= window.innerHeight) element.classList.add("reveal-ready");
+    });
+    revealVisible();
     let observer: IntersectionObserver | undefined;
     if ("IntersectionObserver" in window) {
       observer = new IntersectionObserver((entries) => {
@@ -98,7 +116,7 @@ export function ReferenceInteractions() {
             observer?.unobserve(entry.target);
           }
         });
-      }, { threshold: 0.12, rootMargin: "0px 0px -7% 0px" });
+      }, { threshold: 0, rootMargin: "0px 0px -24px 0px" });
       revealElements.forEach((element) => observer?.observe(element));
     } else {
       revealElements.forEach((element) => element.classList.add("in"));
@@ -106,7 +124,7 @@ export function ReferenceInteractions() {
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const finePointer = window.matchMedia("(pointer: fine)");
-    const counterElements = Array.from(document.querySelectorAll<HTMLElement>("[data-counter]"));
+    const counterElements = Array.from(scope.querySelectorAll<HTMLElement>("[data-counter]"));
     const counterFrames = new Set<number>();
     const counterTimers = new Set<number>();
     let counterObserver: IntersectionObserver | undefined;
@@ -164,10 +182,11 @@ export function ReferenceInteractions() {
     }
 
     const root = document.documentElement;
-    const header = document.querySelector<HTMLElement>("header.site");
+    const header = scope.querySelector<HTMLElement>("header.site");
     let scrollFrame: number | undefined;
     const updateScrollEffects = () => {
       scrollFrame = undefined;
+      revealVisible();
       const scrollRange = Math.max(1, root.scrollHeight - window.innerHeight);
       const progress = Math.max(0, Math.min(1, window.scrollY / scrollRange));
       root.style.setProperty("--scroll-progress", progress.toFixed(4));
@@ -193,7 +212,7 @@ export function ReferenceInteractions() {
     };
     window.addEventListener("pointermove", updatePointerGlow, { passive: true });
 
-    const orbitVisual = document.querySelector<HTMLElement>(".orbit-visual");
+    const orbitVisual = scope.querySelector<HTMLElement>(".orbit-visual");
     let orbitFrame: number | undefined;
     const resetOrbit = () => {
       orbitVisual?.style.setProperty("--orbit-card-x", "0px");
@@ -230,6 +249,8 @@ export function ReferenceInteractions() {
       comingSoonToast.remove();
       faqCleanups.forEach((cleanup) => cleanup());
       observer?.disconnect();
+      document.removeEventListener("keydown", onEscape);
+      revealElements.forEach((element) => element.classList.remove("reveal-ready"));
       counterObserver?.disconnect();
       counterFrames.forEach((frame) => window.cancelAnimationFrame(frame));
       counterTimers.forEach((timer) => window.clearTimeout(timer));
@@ -242,7 +263,7 @@ export function ReferenceInteractions() {
       if (pointerFrame !== undefined) window.cancelAnimationFrame(pointerFrame);
       if (orbitFrame !== undefined) window.cancelAnimationFrame(orbitFrame);
     };
-  }, []);
+  }, [pathname, html]);
 
-  return null;
+  return html === undefined ? null : <div ref={contentRef} dangerouslySetInnerHTML={{ __html: html }} />;
 }
