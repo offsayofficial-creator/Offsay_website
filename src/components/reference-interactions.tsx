@@ -2,12 +2,14 @@
 
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
+import { bindContactForm } from "@/lib/contact-form";
 
 export function ReferenceInteractions({ html }: { html?: string }) {
   const contentRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   useEffect(() => {
     const scope = contentRef.current ?? document;
+    const cleanupContact = bindContactForm(scope);
     const navToggle = scope.querySelector<HTMLElement>("#navToggle");
     const navLinks = scope.querySelector<HTMLElement>("#navLinks");
     const updateMenuIcon = () => {
@@ -241,6 +243,7 @@ export function ReferenceInteractions({ html }: { html?: string }) {
     orbitVisual?.addEventListener("pointerleave", resetOrbit);
 
     return () => {
+      cleanupContact();
       navToggle?.removeEventListener("click", toggleNav);
       document.body.classList.remove("nav-open");
       navAnchors.forEach((anchor) => anchor.removeEventListener("click", closeNav));
