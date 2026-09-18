@@ -61,10 +61,18 @@ function verificationIdFrom(params: URLSearchParams) {
 export function EmailVerificationHandler() {
   const params = useSearchParams();
   const started = useRef(false);
+  const [attempt, setAttempt] = useState(0);
+  const [retryIn, setRetryIn] = useState(0);
   const [state, setState] = useState<ViewState>("working");
   const [message, setMessage] = useState("We are securely confirming your email address.");
   const [merchant, setMerchant] = useState(false);
   const portalUrl = (process.env.NEXT_PUBLIC_PORTAL_URL || "https://merchant.offsay.in").replace(/\/$/, "");
+
+  useEffect(() => {
+    if (retryIn <= 0) return;
+    const timer = window.setTimeout(() => setRetryIn((value) => Math.max(0, value - 1)), 1000);
+    return () => window.clearTimeout(timer);
+  }, [retryIn]);
 
   useEffect(() => {
     if (started.current) return;
@@ -73,6 +81,7 @@ export function EmailVerificationHandler() {
       const verificationId = verificationIdFrom(params);
       const oobCode = params.get("oobCode");
       const mode = params.get("mode");
+      let invalidAction = false;
       if (oobCode && mode !== "verifyEmail") {
         setState("error");
         setMessage("This verification link is incomplete or invalid.");
@@ -97,6 +106,7 @@ export function EmailVerificationHandler() {
             );
             return;
           }
+          invalidAction = true;
         }
       }
 
@@ -105,6 +115,11 @@ export function EmailVerificationHandler() {
       // Do not report a false verification failure. The app/portal must now
       // perform the authoritative Firebase-to-Django reconciliation.
       if (!verificationId) {
+        if (invalidAction) {
+          setState("error");
+          setMessage("This email link is expired or already used. Try logging in if you previously verified, or open the latest verification email.");
+          return;
+        }
         setState("handoff");
         setMessage(
           "Return to the Offsay app and tap ‘I’ve verified my email’. Merchants can continue to the login page, where Offsay will check and activate the verified account.",
@@ -115,20 +130,34 @@ export function EmailVerificationHandler() {
         const base = await apiBaseUrl();
         const response = await fetch(
           `${base}/auth/email-verification/${verificationId}/confirm/`,
-          { method: "POST", headers: { Accept: "application/json" } },
+          { method: "POST", headers: { Accept: "application/json" }, signal: AbortSignal.timeout(15000) },
         );
         const data = (await response.json()) as {
           purpose?: string;
           resolved_status?: string;
           detail?: string;
+          error?: { details?: { detail?: string } };
         };
         if (!response.ok || data.resolved_status !== "VERIFIED") {
           if (response.status === 410 || data.resolved_status === "EXPIRED") {
             setState("expired");
-            setMessage("This verification link has expired. Request a new link and try again.");
+            setMessage("This registration session has expired. Please contact OffSay support to restart registration.");
             return;
           }
-          throw new Error(data.detail || "Offsay could not confirm this email.");
+          if (response.status === 429 || response.status === 503) {
+            const raw = response.headers.get("Retry-After") || "60";
+            const seconds = Number(raw);
+            const delay = Number.isFinite(seconds) ? seconds : (Date.parse(raw) - Date.now()) / 1000;
+            setRetryIn(Math.max(1, Math.ceil(Number.isFinite(delay) ? delay : 60)));
+          }
+          const detail = data.detail || data.error?.details?.detail;
+          throw new Error(
+            response.status === 429
+              ? "Too many verification checks. Your email may already be verified. Wait for the retry timer, then check again."
+              : invalidAction && response.status === 409
+                ? "This email link is expired or already used. Open the latest verification email, or try logging in if you previously verified."
+                : detail || "OffSay could not confirm your email. Please try again; you do not need to register again.",
+          );
         }
         const isMerchant = data.purpose === "MERCHANT_REGISTRATION";
         setMerchant(isMerchant);
@@ -144,7 +173,7 @@ export function EmailVerificationHandler() {
       }
     };
     void verify();
-  }, [params]);
+  }, [params, attempt]);
 
   return (
     <section className={styles.card}>
@@ -180,8 +209,17 @@ export function EmailVerificationHandler() {
           Open merchant login
         </a>
       )}
-      {(state === "expired" || state === "error") && (
-        <p className={styles.help}>Return to the app or merchant registration page to request another link.</p>
+      {state === "error" && (
+        <button className={styles.action} disabled={retryIn > 0} onClick={() => {
+          started.current = false;
+          setState("working");
+          setAttempt((value) => value + 1);
+        }}>
+          {retryIn > 0 ? `Try again in ${retryIn}s` : "Check verification again"}
+        </button>
+      )}
+      {state === "expired" && (
+        <p className={styles.help}>Contact offsay.official@gmail.com for registration assistance.</p>
       )}
     </section>
   );
