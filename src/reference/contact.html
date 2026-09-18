@@ -48,10 +48,10 @@
 
     <div class="card reveal" style="padding:36px;">
       <h3 class="h-display" style="font-size:19px; margin-bottom:22px;">Send a message</h3>
-      <form action="mailto:offsay.official@gmail.com" method="get" enctype="text/plain">
+      <form data-contact-form>
         <div class="grid grid-2" style="gap:16px;">
-          <div class="field"><label>Full name</label><input type="text" name="name" placeholder="Your name" required></div>
-          <div class="field"><label>Email address</label><input type="email" name="email" placeholder="you@example.com" required></div>
+          <div class="field"><label>Full name</label><input type="text" name="name" maxlength="120" placeholder="Your name" required></div>
+          <div class="field"><label>Email address</label><input type="email" name="email" maxlength="254" placeholder="you@example.com" required></div>
         </div>
         <div class="field">
           <label>I am a…</label>
@@ -62,10 +62,12 @@
             <option>Other</option>
           </select>
         </div>
-        <div class="field"><label>Subject</label><input type="text" name="subject" placeholder="How can we help?" required></div>
-        <div class="field"><label>Message</label><textarea name="message" placeholder="Tell us a bit more…" required></textarea></div>
+        <div class="field"><label>Subject</label><input type="text" name="subject" maxlength="200" placeholder="How can we help?" required></div>
+        <div class="field"><label>Message (optional)</label><textarea name="message" maxlength="5000" placeholder="Tell us a bit more…"></textarea></div>
+        <div hidden aria-hidden="true"><label>Leave this empty<input name="website" tabindex="-1" autocomplete="off"></label></div>
         <button type="submit" class="btn btn-primary btn-block btn-lg">Send Message <i class="fa-solid fa-paper-plane" style="margin-left:6px;"></i></button>
-        <p class="faint" style="font-size:11.5px; margin-top:12px; text-align:center;">This opens your email app to send the message directly.</p>
+        <p class="faint" style="font-size:11.5px; margin-top:12px; text-align:center;">Your enquiry will be emailed directly to the OffSay team.</p>
+        <p data-contact-status role="status" aria-live="polite" aria-atomic="true" style="margin-top:12px;"></p>
       </form>
     </div>
 
