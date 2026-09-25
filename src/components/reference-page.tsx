@@ -4,6 +4,7 @@ import { ReferenceInteractions } from "@/components/reference-interactions";
 import { siteConfig } from "@/lib/site";
 
 const routeMap: Record<string, string> = {
+  "partners.html": "/merchants/",
   "index.html": "/",
   "merchants.html": "/for-merchants",
   "contact.html": "/contact",
@@ -11,7 +12,7 @@ const routeMap: Record<string, string> = {
   "terms-of-service.html": "/terms-of-service",
 };
 
-export function ReferencePage({ file }: { file: "index.html" | "merchants.html" | "contact.html" }) {
+export function ReferencePage({ file }: { file: "partners.html" | "index.html" | "merchants.html" | "contact.html" }) {
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
   const source = fs.readFileSync(path.join(process.cwd(), "src", "reference", file), "utf8");
   const body = source.match(/<body[^>]*>([\s\S]*?)<\/body>/i)?.[1] ?? "";

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { Partners } from "@/components/partners";
 import { usePathname } from "next/navigation";
 import { bindContactForm } from "@/lib/contact-form";
 
@@ -268,5 +269,14 @@ export function ReferenceInteractions({ html }: { html?: string }) {
     };
   }, [pathname, html]);
 
-  return html === undefined ? null : <div ref={contentRef} dangerouslySetInnerHTML={{ __html: html }} />;
+  if (html === undefined) return null;
+  const marker = /<div data-partners="(preview|directory)"><\/div>/;
+  const match = html.match(marker);
+  if (!match) return <div ref={contentRef} dangerouslySetInnerHTML={{ __html: html }} />;
+  const [before, , after] = html.split(marker);
+  return <div ref={contentRef}>
+    <div dangerouslySetInnerHTML={{ __html: before }} />
+    <Partners preview={match[1] === "preview"} />
+    <div dangerouslySetInnerHTML={{ __html: after }} />
+  </div>;
 }

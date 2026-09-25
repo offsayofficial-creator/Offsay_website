@@ -1,9 +1,11 @@
+import { showEnquirySuccess } from "./enquiry-success";
 export function bindContactForm(scope: ParentNode): () => void {
   const form = scope.querySelector<HTMLFormElement>("[data-contact-form]");
   if (!form) return () => {};
   const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
   const status = form.querySelector<HTMLElement>("[data-contact-status]")!;
   const original = button.innerHTML;
+  let closeSuccess: (() => void) | undefined;
   let pending = false;
   let disposed = false;
   let controller: AbortController | undefined;
@@ -15,7 +17,7 @@ export function bindContactForm(scope: ParentNode): () => void {
     pending = true;
     controller = new AbortController();
     button.disabled = true;
-    button.textContent = "Sending…";
+    button.textContent = "Submitting…";
     status.textContent = "";
     form.setAttribute("aria-busy", "true");
     const data = Object.fromEntries(new FormData(form).entries());
@@ -29,10 +31,13 @@ export function bindContactForm(scope: ParentNode): () => void {
       if (!response.ok) {
         if (response.status === 429) throw new Error("Too many messages. Please wait before trying again.");
         if (response.status === 400) throw new Error("Please check your name, email, subject and message length, then try again.");
-        throw new Error("Could not send your message. Please try again later or contact us on WhatsApp.");
+        throw new Error("Could not save your enquiry. Please try again later or contact us on WhatsApp.");
       }
       form.reset();
-      status.textContent = "Your enquiry has been sent. Thank you for contacting OffSay.";
+      status.textContent = "Your enquiry has been received. Thank you for contacting OffSay.";
+      button.disabled = false;
+      closeSuccess?.();
+      closeSuccess = showEnquirySuccess(button);
     } catch (error) {
       if (!disposed) status.textContent = error instanceof Error && error.name !== "AbortError"
         ? (error instanceof TypeError ? "Unable to connect. Please try again or contact us on WhatsApp." : error.message)
@@ -48,5 +53,5 @@ export function bindContactForm(scope: ParentNode): () => void {
     }
   };
   form.addEventListener("submit", submit);
-  return () => { disposed = true; controller?.abort(); form.removeEventListener("submit", submit); };
+  return () => { disposed = true; closeSuccess?.(); controller?.abort(); form.removeEventListener("submit", submit); };
 }

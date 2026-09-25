@@ -8,6 +8,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/",
     "/for-merchants/",
     "/contact/",
+    "/merchants/",
   ];
   return paths.map((path) => ({
     url: path === "/" ? `${siteConfig.siteUrl}/` : `${siteConfig.siteUrl}${path}`,
