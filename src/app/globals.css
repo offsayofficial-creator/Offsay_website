@@ -573,3 +573,5 @@ main{min-height:60vh}
 @keyframes enquiry-appear { from { opacity: 0; transform: translateY(10px) scale(.96); } to { opacity: 1; transform: none; } }
 @keyframes enquiry-check { from { stroke-dashoffset: 1; opacity: 0; } 1% { opacity: 1; } to { stroke-dashoffset: 0; opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .enquiry-success[open], .enquiry-success[open] path { animation: none; } }
+
+.partners-loop-group { display: flex; align-items: stretch; gap: inherit; flex: 0 0 auto; }
