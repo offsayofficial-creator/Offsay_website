@@ -21,14 +21,16 @@ export function Partners({ preview = false }: { preview?: boolean }) {
   const [attempt, setAttempt] = useState(0);
   const pending = useRef(true);
   const stripRef = useRef<HTMLDivElement>(null);
+  const groupRef = useRef<HTMLDivElement>(null);
   const [overflow, setOverflow] = useState(false);
   useEffect(() => {
     const strip = stripRef.current;
     if (!strip) return;
-    const measure = () => setOverflow(strip.scrollWidth > strip.clientWidth + 1);
+    const measure = () => setOverflow((groupRef.current?.scrollWidth ?? 0) > strip.clientWidth + 1);
     measure();
     const observer = typeof ResizeObserver !== "undefined" ? new ResizeObserver(measure) : null;
     observer?.observe(strip);
+    if (groupRef.current) observer?.observe(groupRef.current);
     window.addEventListener("resize", measure);
     return () => { observer?.disconnect(); window.removeEventListener("resize", measure); };
   }, [items]);
@@ -36,23 +38,23 @@ export function Partners({ preview = false }: { preview?: boolean }) {
     const strip = stripRef.current;
     if (!strip || !overflow || !window.matchMedia) return;
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    let frame = 0, previous = 0, direction = 1, position = strip.scrollLeft;
+    let frame = 0, previous = 0, position = strip.scrollLeft;
     const tick = (now: number) => {
       const elapsed = previous ? Math.min(now - previous, 50) : 0;
       previous = now;
       if (!motion.matches && !document.hidden && !strip.matches(":hover, :focus-within, :active")) {
-        const maximum = strip.scrollWidth - strip.clientWidth;
-        position = Math.max(0, Math.min(maximum, position + direction * elapsed * 0.022));
-        strip.scrollLeft = position;
-        if (strip.scrollLeft >= maximum - 1) direction = -1;
-        else if (strip.scrollLeft <= 0) direction = 1;
+        const distance = (groupRef.current?.getBoundingClientRect().width ?? 0) + parseFloat(getComputedStyle(strip).gap || "0");
+        if (distance > 0) {
+          position = (position + elapsed * 0.022) % distance;
+          strip.scrollLeft = position;
+        }
       }
       else { position = strip.scrollLeft; }
       frame = requestAnimationFrame(tick);
     };
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [overflow]);
+  }, [overflow, items]);
   useEffect(() => {
     const controller = new AbortController();
     let active = true;
@@ -100,7 +102,8 @@ export function Partners({ preview = false }: { preview?: boolean }) {
       </ul>
       </div>
       <div className="partners-grid" ref={stripRef} tabIndex={overflow ? 0 : undefined} role="region" aria-label="Merchant logos; scroll to explore">
-        {items.map(item => <PartnerCard key={item.id} partner={item} />)}
+        <div className="partners-loop-group" ref={groupRef}>{items.map(item => <PartnerCard key={item.id} partner={item} />)}</div>
+        {overflow && <div className="partners-loop-group" aria-hidden="true">{items.map(item => <PartnerCard key={`copy-${item.id}`} partner={item} />)}</div>}
       </div>
       <div className="partners-status" role="status" aria-live="polite">
         {loading ? "Loading partners…" : error ? "Unable to load partners. Please try again." : !items.length ? "Our partners will appear here soon." : null}
