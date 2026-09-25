@@ -5,7 +5,9 @@ import { bindContactForm } from "@/lib/contact-form";
 let cleanup = () => {};
 afterEach(() => { cleanup(); document.body.innerHTML = ""; vi.unstubAllGlobals(); });
 function setup(message = "") {
-  document.body.innerHTML = `<form data-contact-form><input name="name" value="Visitor" required><input name="email" type="email" value="visitor@example.com" required><input name="subject" value="Question" required><select name="role"><option>Shopper / App user</option></select><textarea name="message"></textarea><input name="website" value=""><button type="submit">Send Message</button><p data-contact-status role="status"></p></form>`;
+  HTMLDialogElement.prototype.showModal = function() { this.setAttribute("open", ""); };
+  HTMLDialogElement.prototype.close = function() { this.removeAttribute("open"); };
+  document.body.innerHTML = `<form data-contact-form><input name="name" value="Visitor" required><input name="email" type="email" value="visitor@example.com" required><input name="subject" value="Question" required><select name="role"><option>Shopper / App user</option></select><textarea name="message"></textarea><input name="website" value=""><button type="submit">Submit enquiry</button><p data-contact-status role="status"></p></form>`;
   document.querySelector("textarea")!.value = message;
   cleanup = bindContactForm(document);
   return document.querySelector("form")!;
@@ -17,7 +19,8 @@ describe("contact form", () => {
       vi.stubGlobal("fetch", fetcher);
       const form = setup(message);
       fireEvent.submit(form);
-      await waitFor(() => expect(document.querySelector("[role=status]")).toHaveTextContent("Your enquiry has been sent"));
+      await waitFor(() => expect(document.querySelector("[role=status]")).toHaveTextContent("Your enquiry has been received"));
+      expect(document.querySelector("dialog[open]")).toHaveTextContent("Enquiry submitted successfully!");
       expect(fetcher.mock.calls[0][0]).toMatch(/\/api\/v1\/contact\/$/);
       expect(JSON.parse(fetcher.mock.calls[0][1].body).message).toBe(message);
       expect(document.querySelector("textarea")!.value).toBe("");
@@ -41,6 +44,7 @@ describe("contact form", () => {
       fireEvent.submit(form);
       await waitFor(() => expect(document.querySelector("button")).not.toBeDisabled());
       expect(document.querySelector("textarea")!.value).toBe("Keep my message");
+      expect(document.querySelector("dialog")).toBeNull();
       expect(document.querySelector("[role=status]")!.textContent).not.toBe("");
     });
   }
@@ -51,4 +55,18 @@ describe("contact form", () => {
     fireEvent.submit(form);
     expect(fetcher).not.toHaveBeenCalled();
   });
+});
+
+it("contains keyboard focus and restores submit focus on Escape", async () => {
+  vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true }));
+  const form = setup(); fireEvent.submit(form);
+  await waitFor(() => expect(document.querySelector("dialog[open]")).not.toBeNull());
+  const dialog = document.querySelector("dialog")!;
+  const buttons = dialog.querySelectorAll("button");
+  expect(document.activeElement).toBe(buttons[1]);
+  fireEvent.keyDown(dialog, { key: "Tab" }); expect(document.activeElement).toBe(buttons[0]);
+  fireEvent.keyDown(dialog, { key: "Tab", shiftKey: true }); expect(document.activeElement).toBe(buttons[1]);
+  fireEvent.keyDown(dialog, { key: "Escape" });
+  expect(document.querySelector("dialog")).toBeNull();
+  expect(document.activeElement).toBe(form.querySelector("button"));
 });
