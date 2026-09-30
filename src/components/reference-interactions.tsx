@@ -10,6 +10,23 @@ export function ReferenceInteractions({ html }: { html?: string }) {
   const pathname = usePathname();
   useEffect(() => {
     const scope = contentRef.current ?? document;
+    const merchantOffer = scope.querySelector<HTMLElement>("[data-merchant-offer]");
+    const dismissMerchantOffer = scope.querySelector<HTMLButtonElement>("[data-dismiss-merchant-offer]");
+    const merchantOfferStorageKey = "offsay-merchant-offer-dismissed";
+    try {
+      if (merchantOffer && window.sessionStorage.getItem(merchantOfferStorageKey) === "1") merchantOffer.hidden = true;
+    } catch {
+      // The banner remains usable when browser storage is unavailable.
+    }
+    const hideMerchantOffer = () => {
+      if (merchantOffer) merchantOffer.hidden = true;
+      try {
+        window.sessionStorage.setItem(merchantOfferStorageKey, "1");
+      } catch {
+        // Dismissal still applies to this page without browser storage.
+      }
+    };
+    dismissMerchantOffer?.addEventListener("click", hideMerchantOffer);
     const cleanupContact = bindContactForm(scope);
     const navToggle = scope.querySelector<HTMLElement>("#navToggle");
     const navLinks = scope.querySelector<HTMLElement>("#navLinks");
@@ -244,6 +261,7 @@ export function ReferenceInteractions({ html }: { html?: string }) {
     orbitVisual?.addEventListener("pointerleave", resetOrbit);
 
     return () => {
+      dismissMerchantOffer?.removeEventListener("click", hideMerchantOffer);
       cleanupContact();
       navToggle?.removeEventListener("click", toggleNav);
       document.body.classList.remove("nav-open");
