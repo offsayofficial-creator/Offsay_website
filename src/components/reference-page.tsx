@@ -23,6 +23,10 @@ export function ReferencePage({ file }: { file: "partners.html" | "index.html" |
   );
   html = html.replaceAll("font-family:'Space Grotesk',sans-serif", "font-family:'Poppins',sans-serif");
   html = html.replaceAll(
+    "{{MERCHANT_PORTAL_URL}}",
+    siteConfig.portalUrl.replaceAll("&", "&amp;").replaceAll('"', "&quot;").replaceAll("<", "&lt;").replaceAll(">", "&gt;"),
+  );
+  html = html.replaceAll(
     "{{PLAY_STORE_URL}}",
     siteConfig.playStoreUrl
       .replaceAll("&", "&amp;")
