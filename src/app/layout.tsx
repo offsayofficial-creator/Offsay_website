@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { siteConfig } from "@/lib/site";
 import "./globals.css";
+import { ClarityAnalytics } from "@/components/clarity-analytics";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
@@ -37,6 +38,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       </head>
       <body>
         {children}
+        <ClarityAnalytics projectId={process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID ?? ""} gtmId={process.env.NEXT_PUBLIC_GTM_ID ?? ""} enabled={process.env.NODE_ENV === "production"} />
         <a
           className="whatsapp-float"
           href="https://wa.me/918891709012"

@@ -14,7 +14,7 @@ export default function PrivacyPolicyPage() {
       eyebrow="Your privacy matters"
       title="Privacy Policy"
       description="This policy explains what information OffSay collects, why we use it, and the choices available to customers, merchants, and visitors."
-      updated="29 July 2026"
+      updated="13 October 2026"
       sections={[
         {
           id: "information-we-collect",
@@ -59,6 +59,9 @@ export default function PrivacyPolicyPage() {
             <>
               <p>OffSay uses Firebase Analytics to understand app usage and Firebase Crashlytics to diagnose crashes, non-fatal errors, and stability issues. Reports may include app state, device information, screen activity, and a non-email account identifier.</p>
               <p>We do not use crash reports to collect passwords, payment-card details, or the private content of authentication credentials.</p>
+              <p>With your permission, our website uses Microsoft Clarity to understand page interactions through usage analytics, heatmaps, and session recordings. Clarity may process device and browser information and use analytics cookies. Contact form content is masked, and verification and password-reset pages are excluded. We do not grant advertising storage consent.</p>
+              <p>With your permission, Google Tag Manager can also load Google Analytics to measure website visits, traffic sources, and page activity using browser and device information and analytics cookies. Advertising storage, advertising user data, and advertising personalization consent remain denied.</p>
+              <p>You can accept or reject website analytics and change your choice using “Analytics preferences.” Rejecting analytics does not prevent you from using OffSay. Learn more in the <a href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener noreferrer">Microsoft Privacy Statement</a> and <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google Privacy Policy</a>.</p>
             </>
           ),
         },
