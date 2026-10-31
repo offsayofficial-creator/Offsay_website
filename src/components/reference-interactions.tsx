@@ -4,12 +4,14 @@ import { useEffect, useRef } from "react";
 import { Partners } from "@/components/partners";
 import { usePathname } from "next/navigation";
 import { bindContactForm } from "@/lib/contact-form";
+import { bindLaunchCountdown } from "@/lib/launch-countdown";
 
 export function ReferenceInteractions({ html }: { html?: string }) {
   const contentRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   useEffect(() => {
     const scope = contentRef.current ?? document;
+    const cleanupLaunch = bindLaunchCountdown(scope);
     const merchantOffer = scope.querySelector<HTMLElement>("[data-merchant-offer]");
     const dismissMerchantOffer = scope.querySelector<HTMLButtonElement>("[data-dismiss-merchant-offer]");
     const merchantOfferStorageKey = "offsay-merchant-offer-dismissed";
@@ -261,6 +263,7 @@ export function ReferenceInteractions({ html }: { html?: string }) {
     orbitVisual?.addEventListener("pointerleave", resetOrbit);
 
     return () => {
+      cleanupLaunch();
       dismissMerchantOffer?.removeEventListener("click", hideMerchantOffer);
       cleanupContact();
       navToggle?.removeEventListener("click", toggleNav);
