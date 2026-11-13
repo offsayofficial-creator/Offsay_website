@@ -143,33 +143,7 @@ header.site.scrolled{
 .btn-block{width:100%;}
 
 /* store badges */
-.local-offers-notice{position:relative;display:flex;align-items:flex-start;gap:12px;max-width:480px;margin-top:22px;padding:14px 16px;border:1px solid rgba(167,139,255,.38);border-radius:18px;background:radial-gradient(ellipse at 0% 0%,rgba(124,92,255,.2),transparent 65%),linear-gradient(135deg,rgba(36,21,88,.65),rgba(19,18,38,.92));box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 12px 32px -24px rgba(124,92,255,.5)}
-.local-offers-notice-icon{display:grid;place-items:center;flex:0 0 38px;width:38px;height:38px;border-radius:12px;border:1px solid rgba(167,139,255,.3);background:linear-gradient(145deg,rgba(167,139,255,.28),rgba(124,92,255,.1));color:#c9b8ff;font-size:19px;box-shadow:inset 0 1px 0 rgba(255,255,255,.12)}
-.local-offers-notice-icon i{transform:rotate(-12deg)}
-.local-offers-notice-copy{min-width:0}
-.local-offers-notice-label{display:block;margin-bottom:4px;color:var(--violet-light);font-size:8px;font-weight:600;letter-spacing:1.3px;text-transform:uppercase}
-.local-offers-notice h2{font-size:clamp(16px,1.35vw,18px);font-weight:600;line-height:1.35;letter-spacing:-.025em}
-.local-offers-notice h2 span{color:#bba3ff}
-.local-offers-notice p{margin-top:6px;color:#bbb3d3;font-size:11px;line-height:1.55}
-.local-offers-notice-note{display:block;margin-top:6px;color:var(--violet-light);font-size:10px;font-weight:500;line-height:1.5}
 .hero-store-buttons{display:flex;gap:14px;margin-top:18px;flex-wrap:wrap}
-.merchant-notice .local-offers-notice-icon i{transform:none}
-.merchant-notice-register{display:inline-flex;align-items:center;gap:8px;margin-top:10px;padding:7px 12px;border-radius:8px;background:var(--grad);color:#fff;font-size:11px;font-weight:600;line-height:1.5;transition:filter .2s ease}
-.merchant-notice-register:hover{filter:brightness(1.12)}
-.merchant-notice-register:focus-visible{outline:2px solid var(--violet-light);outline-offset:3px}
-.hero-notices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;width:calc(100% - 2 * var(--page-gutter));max-width:1280px;margin:20px auto 0}
-.hero-notices .local-offers-notice{display:flex;align-items:center;gap:18px;margin:0;max-width:none;padding:14px 20px;border:1px solid rgba(124,92,255,.65);border-radius:13px;background:linear-gradient(110deg,rgba(76,25,157,.3),rgba(23,22,52,.85))}
-.hero-notices .local-offers-notice-icon{flex:0 0 44px;width:44px;height:44px;border-radius:12px;background:linear-gradient(145deg,#8e52e6,#4b239d);color:#efe7ff;font-size:23px}
-.hero-notices .local-offers-notice-copy{flex:1;min-width:0}
-.hero-notices .local-offers-notice-label{display:inline-flex;align-items:center;margin-bottom:7px;padding:4px 10px;border:1px solid rgba(167,139,255,.5);border-radius:20px;background:rgba(124,92,255,.22);color:#e0d3ff;font-size:11px;font-weight:700;letter-spacing:1px;line-height:1.4}
-.hero-notices h2{font-size:17px;line-height:1.4}
-.hero-notices h2 span{display:inline;color:#b395ff}
-.hero-notices p{font-size:13px;line-height:1.5;margin-top:5px}
-.hero-notices .local-offers-notice-note{font-size:12px;margin-top:5px}
-.hero-notices .merchant-notice-register{flex-shrink:0;margin:0;padding:10px 16px;font-size:12px;border-radius:10px}
-@media(min-width:601px) and (max-width:1000px){.hero-notices .local-offers-notice{gap:12px;flex-wrap:wrap}.hero-notices .local-offers-notice-copy{flex:1 1 calc(100% - 56px)}.hero-notices .merchant-notice-register{margin-left:56px}}
-@media(max-width:600px){.hero-notices{grid-template-columns:minmax(0,1fr);margin-top:16px;gap:14px}.hero-notices .local-offers-notice{gap:12px;padding:12px 14px;flex-wrap:wrap}.hero-notices .local-offers-notice-icon{flex-basis:36px;width:36px;height:36px;font-size:19px}.hero-notices h2{font-size:13px}.hero-notices p{font-size:11px}.hero-notices .local-offers-notice-copy{flex:1 1 calc(100% - 48px)}.hero-notices .merchant-notice-register{margin-left:48px;padding:7px 14px;font-size:11px}}
-@media(max-width:480px){.local-offers-notice{gap:10px;padding:12px;border-radius:14px}.local-offers-notice-icon{flex-basis:36px;width:36px;height:36px;border-radius:11px;font-size:18px}.local-offers-notice h2{font-size:16px}.local-offers-notice h2 span{display:block}}
 .store-badge{
   display:flex; align-items:center; gap:10px; padding:11px 18px; border-radius:12px;
   background:var(--surface-alt); border:1px solid var(--border-light); color:var(--text); cursor:pointer;
@@ -616,7 +590,6 @@ main{min-height:60vh}
 
 .partners-loop-group { display: flex; align-items: stretch; gap: inherit; flex: 0 0 auto; }
 
-@media(max-width:600px){.hero-notices .local-offers-notice{display:grid;grid-template-columns:28px minmax(0,1fr);align-items:start;gap:6px 10px;padding:10px 12px}.hero-notices .local-offers-notice-icon{width:28px;height:28px;margin-top:6px;font-size:15px}.hero-notices .local-offers-notice-copy{min-width:0}.hero-notices .local-offers-notice-label{font-size:9px;padding:2px 7px;margin-bottom:4px;letter-spacing:.5px}.hero-notices h2{font-size:14px;line-height:1.3}.hero-notices h2 span{display:inline}.hero-notices p{font-size:11px;line-height:1.45;margin-top:4px}.hero-notices .local-offers-notice-note{font-size:10px;margin-top:4px}.hero-notices .merchant-notice-register{grid-column:2;justify-self:start;margin:0;padding:5px 9px;font-size:10px}}
 
 /* Optional website analytics consent. */
 .analytics-consent{position:fixed;left:24px;bottom:24px;z-index:250;width:min(540px,calc(100% - 112px));display:flex;flex-wrap:wrap;gap:16px;padding:20px;border:1px solid #a78bff66;border-radius:18px;background:linear-gradient(135deg,#241b3d,#131226);box-shadow:0 16px 50px #0006;color:var(--text)}
@@ -625,14 +598,110 @@ main{min-height:60vh}
 .analytics-preferences:focus-visible{outline:2px solid var(--violet-light);outline-offset:3px}
 @media(max-width:600px){.analytics-consent{left:12px;bottom:84px;width:calc(100% - 24px);padding:16px;gap:12px}.analytics-consent strong{font-size:14px}}
 
-/* Homepage expected launch announcement. */
-.hero-notices .launch-notice{align-items:flex-start;padding-top:18px;padding-bottom:18px}
-.hero-notices .launch-notice .local-offers-notice-icon{margin-top:4px;background:var(--grad);box-shadow:0 6px 20px rgba(124,92,255,.25)}
-.hero-notices .launch-notice .local-offers-notice-icon i{transform:none}
-.launch-status-dot{width:7px;height:7px;margin-right:6px;border-radius:50%;background:#2dd4bf;box-shadow:0 0 0 4px rgba(45,212,191,.12)}
-.launch-countdown{display:flex;gap:7px;margin-top:12px}
-.launch-countdown-unit{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:44px;padding:5px 8px;border:1px solid rgba(167,139,255,.25);border-radius:8px;background:rgba(10,9,24,.48)}
-.launch-countdown-unit strong{font-size:18px;line-height:1.25;font-variant-numeric:tabular-nums;color:#f5f2ff}
-.launch-countdown-unit small{margin-top:3px;font-size:9px;line-height:1.4;letter-spacing:1px;text-transform:uppercase;color:#bca8ff}
-.launch-countdown-complete{color:#c5b3ff;font-size:14px;font-weight:600}
-@media(max-width:600px){.hero-notices .launch-notice{padding:12px}.launch-countdown{margin-top:9px;gap:6px}.launch-countdown-unit{min-width:39px;padding:4px 7px}.launch-countdown-unit strong{font-size:16px}.launch-countdown-unit small{font-size:8px}}
+
+/* Animated neon merchant ticket. */
+.merchant-highlight-row{margin-bottom:30px}
+.merchant-highlight{position:relative;isolation:isolate;display:grid;grid-template-columns:minmax(0,1fr) auto;width:100%;max-width:690px;border:1.5px solid #a481ff;border-radius:22px;background:radial-gradient(ellipse at 0 0,rgba(127,75,255,.34),transparent 65%),radial-gradient(ellipse at 100% 100%,rgba(100,52,224,.24),transparent 60%),#151128;color:#fff;text-decoration:none;box-shadow:inset 0 0 20px rgba(145,101,255,.08),0 0 25px rgba(123,70,242,.18);animation:merchant-ticket-glow 4s ease-in-out infinite}
+.merchant-highlight::before,.merchant-highlight::after{content:"";position:absolute;z-index:2;top:50%;width:20px;height:32px;background:#0d0b19;border:1.5px solid #a481ff;transform:translateY(-50%)}
+.merchant-highlight::before{left:-1.5px;border-left:0;border-radius:0 22px 22px 0}
+.merchant-highlight::after{right:-1.5px;border-right:0;border-radius:22px 0 0 22px}
+.merchant-ticket-copy{position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:center;gap:10px;padding:25px 24px 25px 30px;border-radius:21px 0 0 21px}
+.merchant-ticket-copy::after{content:"";position:absolute;inset:-60% -100%;background:linear-gradient(110deg,transparent 43%,rgba(215,193,255,.1) 50%,transparent 57%);transform:translateX(-45%);animation:merchant-ticket-shimmer 7s ease-in-out infinite;pointer-events:none}
+.merchant-ticket-kicker{display:flex;align-items:center;gap:9px;color:#b895ff;font-size:14px;font-weight:600;line-height:1.4}
+.merchant-ticket-icon{display:grid;place-items:center;width:27px;height:27px;border-radius:8px;background:linear-gradient(145deg,#c59bff,#6231db);color:#e9d9ff;box-shadow:inset 0 1px 1px #dfc4ff;font-size:20px}
+.merchant-highlight strong{position:relative;font-size:clamp(22px,2.35vw,32px);line-height:1.2;font-weight:700;letter-spacing:-1px;color:#fff;text-shadow:0 0 16px rgba(201,168,255,.35)}
+.merchant-highlight strong span{color:#c4a5ff}
+
+.merchant-ticket-stub{position:relative;display:flex;align-items:center;justify-content:center;padding:24px 23px;border-left:1.5px dashed rgba(163,119,255,.65)}
+.merchant-ticket-stub::before,.merchant-ticket-stub::after{content:"";position:absolute;left:-8px;width:14px;height:8px;background:#0d0b19;border:1.5px solid #a481ff}
+.merchant-ticket-stub::before{top:-1.5px;border-top:0;border-radius:0 0 10px 10px}
+.merchant-ticket-stub::after{bottom:-1.5px;border-bottom:0;border-radius:10px 10px 0 0}
+.merchant-ticket-action{display:inline-flex;align-items:center;gap:10px;padding:8px 15px 8px 8px;border:1px solid #bd94ff;border-radius:40px;background:linear-gradient(120deg,#a77bff,#6435e9);box-shadow:inset 0 1px 3px rgba(255,255,255,.4),0 0 22px rgba(125,70,255,.25);font-size:14px;font-weight:600;white-space:nowrap;transition:box-shadow .2s ease,transform .2s ease}
+.merchant-ticket-arrow{display:grid;place-items:center;width:31px;height:31px;border-radius:50%;background:rgba(41,13,110,.65);font-size:23px;line-height:1;transition:transform .2s ease}
+.merchant-ticket-spark{position:absolute;right:18px;top:11px;color:#ae83ff;font-size:23px;animation:merchant-ticket-twinkle 4s ease-in-out infinite}
+.merchant-highlight:hover .merchant-ticket-action{transform:translateY(-2px);box-shadow:inset 0 1px 3px rgba(255,255,255,.4),0 0 28px rgba(151,100,255,.5)}
+.merchant-highlight:hover .merchant-ticket-arrow{transform:translateX(2px)}
+.merchant-highlight:focus-visible{outline:3px solid #dfcaff;outline-offset:5px}
+@keyframes merchant-ticket-glow{0%,100%{box-shadow:inset 0 0 20px rgba(145,101,255,.08),0 0 20px rgba(123,70,242,.16)}50%{box-shadow:inset 0 0 25px rgba(145,101,255,.13),0 0 32px rgba(123,70,242,.3)}}
+@keyframes merchant-ticket-shimmer{0%,25%{transform:translateX(-45%)}65%,100%{transform:translateX(45%)}}
+@keyframes merchant-ticket-twinkle{0%,100%{opacity:.45;transform:scale(.85)}50%{opacity:1;transform:scale(1.1)}}
+@media(max-width:600px){.merchant-highlight{border-radius:18px;grid-template-columns:minmax(0,1fr) 105px}.merchant-ticket-copy{padding:20px 13px 20px 22px;gap:9px;border-radius:17px 0 0 17px}.merchant-ticket-kicker{font-size:12px;gap:7px}.merchant-ticket-icon{width:23px;height:23px;font-size:17px}.merchant-highlight strong{font-size:24px;letter-spacing:-.7px}.merchant-highlight strong span{display:block;font-size:19px;margin-top:3px}.merchant-ticket-stub{padding:18px 10px}.merchant-ticket-action{flex-direction:column;gap:6px;padding:10px 12px;font-size:12px;border-radius:22px}.merchant-ticket-arrow{width:29px;height:29px;font-size:21px}.merchant-ticket-spark{right:10px;top:8px;font-size:18px}.merchant-highlight::before,.merchant-highlight::after{width:12px;height:26px}.merchant-highlight-row{margin-bottom:24px}}
+@media(prefers-reduced-motion:reduce){.merchant-highlight,.merchant-ticket-copy::after,.merchant-ticket-spark{animation:none}.merchant-ticket-copy::after{display:none}.merchant-ticket-action,.merchant-ticket-arrow{transition:none}.merchant-highlight:hover .merchant-ticket-action,.merchant-highlight:hover .merchant-ticket-arrow{transform:none}}
+
+/* Compact merchant invitation below the navigation. */
+.merchant-highlight-row{margin:22px 0 0;max-width:420px}
+.merchant-highlight{border-radius:15px;grid-template-columns:minmax(0,1fr) auto}
+.merchant-ticket-copy{padding:13px 16px 13px 22px;gap:5px;border-radius:14px 0 0 14px}
+.merchant-ticket-kicker{font-size:10px;gap:6px}
+.merchant-ticket-icon{width:19px;height:19px;border-radius:6px;font-size:14px}
+.merchant-highlight strong{font-size:20px;letter-spacing:-.5px}
+.merchant-highlight strong span{display:inline;font-size:inherit;margin:0}
+.merchant-ticket-stub{padding:14px 15px}
+.merchant-ticket-action{flex-direction:row;gap:6px;padding:6px 10px 6px 6px;font-size:11px;border-radius:30px}
+.merchant-ticket-arrow{width:23px;height:23px;font-size:18px}
+.merchant-ticket-spark{font-size:13px;top:4px;right:9px}
+.merchant-highlight::before,.merchant-highlight::after{width:10px;height:20px}
+@media(max-width:600px){.merchant-highlight-row{margin-top:20px}.merchant-ticket-copy{padding:12px 10px 12px 18px}.merchant-highlight strong{font-size:17px}.merchant-ticket-stub{padding:12px}.merchant-ticket-action{font-size:10px;padding:5px 8px 5px 5px;gap:5px}.merchant-ticket-arrow{width:21px;height:21px;font-size:16px}}
+@media(max-width:360px){.merchant-highlight strong{font-size:15px}.merchant-ticket-stub{padding:10px 8px}.merchant-ticket-action{gap:4px}.merchant-ticket-copy{padding-left:16px}}
+
+.merchant-top-placement{padding-top:20px;position:relative;z-index:1}
+.merchant-top-placement .merchant-highlight-row{margin:0;max-width:420px}
+@media(max-width:600px){.merchant-top-placement{padding-top:16px}}
+
+/* Keep the promotion integrated with the top of the page. */
+.merchant-top-placement{display:flex;justify-content:center;padding-top:18px}
+.merchant-top-placement .merchant-highlight-row{width:100%;max-width:560px;margin:0}
+.merchant-top-placement .merchant-highlight{border-radius:14px}
+.merchant-top-placement .merchant-ticket-copy{flex-direction:row;align-items:center;justify-content:flex-start;gap:14px;padding:12px 22px}
+.merchant-top-placement .merchant-ticket-kicker{font-size:11px;white-space:nowrap}
+.merchant-top-placement .merchant-highlight strong{font-size:18px;letter-spacing:-.4px}
+.merchant-top-placement .merchant-ticket-stub{padding:10px 17px}
+.merchant-top-placement .merchant-ticket-spark{display:none}
+.merchant-top-placement + .home-hero{padding-top:30px}
+.merchant-top-placement + .home-hero .home-hero-grid{align-items:start}
+.merchant-top-placement + .home-hero .home-hero-grid > .reveal:first-child{padding-top:24px}
+@media(max-width:600px){.merchant-top-placement{padding-top:14px}.merchant-top-placement .merchant-ticket-copy{flex-direction:column;align-items:flex-start;gap:4px;padding:10px 18px}.merchant-top-placement .merchant-ticket-kicker{font-size:10px}.merchant-top-placement .merchant-highlight strong{font-size:17px}.merchant-top-placement .merchant-ticket-stub{padding:10px 12px}.merchant-top-placement + .home-hero{padding-top:24px}.merchant-top-placement + .home-hero .home-hero-grid > .reveal:first-child{padding-top:0}}
+@media(max-width:360px){.merchant-top-placement .merchant-highlight strong{font-size:15px}.merchant-top-placement .merchant-ticket-stub{padding:10px 8px}}
+
+/* Real transparent ticket cutouts, including the divider notches. */
+.merchant-top-placement .merchant-highlight{--ticket-stub-width:130px;grid-template-columns:minmax(0,1fr) var(--ticket-stub-width);mask-image:radial-gradient(ellipse 9px 9px at 0 50%,transparent 98%,#000 100%),radial-gradient(ellipse 9px 9px at 100% 50%,transparent 98%,#000 100%),radial-gradient(circle 6px at calc(100% - var(--ticket-stub-width)) 0,transparent 98%,#000 100%),radial-gradient(circle 6px at calc(100% - var(--ticket-stub-width)) 100%,transparent 98%,#000 100%);mask-composite:intersect}
+.merchant-highlight::before,.merchant-highlight::after,.merchant-ticket-stub::before,.merchant-ticket-stub::after{background:transparent}
+@media(max-width:600px){.merchant-top-placement .merchant-highlight{--ticket-stub-width:108px}}
+@media(max-width:360px){.merchant-top-placement .merchant-highlight{--ticket-stub-width:96px}}
+
+/* Smaller top merchant ticket. */
+.merchant-top-placement .merchant-highlight-row{max-width:460px}
+.merchant-top-placement .merchant-highlight{--ticket-stub-width:108px;border-radius:12px}
+.merchant-top-placement .merchant-ticket-copy{gap:10px;padding:9px 17px}
+.merchant-top-placement .merchant-ticket-kicker{font-size:10px;gap:5px}
+.merchant-top-placement .merchant-ticket-icon{width:17px;height:17px;font-size:12px}
+.merchant-top-placement .merchant-highlight strong{font-size:16px;letter-spacing:-.3px}
+.merchant-top-placement .merchant-ticket-stub{padding:8px 12px}
+.merchant-top-placement .merchant-ticket-action{padding:5px 8px 5px 5px;font-size:10px;gap:5px}
+.merchant-top-placement .merchant-ticket-arrow{width:20px;height:20px;font-size:16px}
+@media(max-width:600px){.merchant-top-placement .merchant-highlight-row{max-width:360px}.merchant-top-placement .merchant-highlight{--ticket-stub-width:92px}.merchant-top-placement .merchant-ticket-copy{gap:3px;padding:8px 16px}.merchant-top-placement .merchant-ticket-kicker{font-size:9px}.merchant-top-placement .merchant-highlight strong{font-size:15px}.merchant-top-placement .merchant-ticket-stub{padding:8px}}
+
+/* Narrow ticket with a stacked offer label. */
+.merchant-top-placement .merchant-highlight-row{max-width:360px}
+.merchant-top-placement .merchant-ticket-copy{flex-direction:column;align-items:flex-start;gap:3px;padding:8px 16px}
+@media(max-width:600px){.merchant-top-placement .merchant-highlight-row{max-width:320px}}
+
+/* Size the ticket to its content instead of stretching the offer column. */
+.merchant-top-placement .merchant-highlight-row{width:fit-content;max-width:100%}
+.merchant-top-placement .merchant-highlight{width:fit-content;max-width:100%;grid-template-columns:minmax(0,max-content) var(--ticket-stub-width)}
+
+/* Comfortable inner spacing while retaining the content-sized ticket. */
+.merchant-top-placement .merchant-highlight{--ticket-stub-width:116px}
+.merchant-top-placement .merchant-ticket-copy{padding:12px 20px}
+.merchant-top-placement .merchant-ticket-stub{padding:12px 16px}
+@media(max-width:600px){.merchant-top-placement .merchant-highlight{--ticket-stub-width:104px}.merchant-top-placement .merchant-ticket-copy{padding:11px 18px}.merchant-top-placement .merchant-ticket-stub{padding:11px 14px}}
+
+.merchant-top-placement.merchant-download-placement{justify-content:flex-start;padding-top:20px}
+
+/* Share the exact outer width of the download buttons and merchant ticket. */
+.hero-download-group{width:max-content;max-width:100%}
+.hero-download-group .merchant-download-placement{width:100%}
+.hero-download-group .merchant-highlight-row{width:100%;max-width:none}
+.hero-download-group .merchant-highlight{width:100%;grid-template-columns:minmax(0,1fr) var(--ticket-stub-width)}
+
+.hero-download-group .merchant-download-placement{padding-top:32px}
